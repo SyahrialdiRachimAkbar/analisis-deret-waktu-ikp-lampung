@@ -1,0 +1,206 @@
+
+==============================================================================
+== 0. KELENGKAPAN SUMBER RESMI (Bapanas A)
+==============================================================================
+baris: 3598 | kab/kota unik: 514 | tahun: 2018,2019,2020,2021,2022,2023,2024 
+514 x 7 = 3598 -> panel seimbang: TRUE 
+IKP kosong: 0 
+baris Lampung: 105 | kab/kota: 15 
+
+==============================================================================
+== 1. KODE BPS RESMI vs KODE DI DATA PROYEK
+==============================================================================
+ kode          nama_resmi         nama_proyek  sama
+ 1801     Lampung Selatan       Lampung Barat TIDAK
+ 1802      Lampung Tengah           Tanggamus TIDAK
+ 1803       Lampung Utara     Lampung Selatan TIDAK
+ 1804       Lampung Barat       Lampung Timur TIDAK
+ 1805       Tulang Bawang      Lampung Tengah TIDAK
+ 1806           Tanggamus       Lampung Utara TIDAK
+ 1807       Lampung Timur           Way Kanan TIDAK
+ 1808           Way Kanan       Tulang Bawang TIDAK
+ 1809           Pesawaran           Pesawaran    YA
+ 1810           Pringsewu           Pringsewu    YA
+ 1811              Mesuji              Mesuji    YA
+ 1812 Tulang Bawang Barat Tulang Bawang Barat    YA
+ 1813       Pesisir Barat       Pesisir Barat    YA
+ 1871 Kota Bandar Lampung Kota Bandar Lampung    YA
+ 1872          Kota Metro          Kota Metro    YA
+kode dgn nama berbeda: 8 dari 15 
+
+==============================================================================
+== 2. BANDING NILAI IKP: proyek vs Bapanas (A) menurut NAMA
+==============================================================================
+cocok vs Bapanas (menurut NAMA): 88 / 105 (84%)
+
+SELISIH yang ditemukan:
+            nama kode tahun proyek bapanas selisih
+   Lampung Barat 1801  2018  70.76   77.43   -6.67
+   Lampung Barat 1801  2019  74.62   77.38   -2.76
+       Tanggamus 1802  2018  71.96   72.18   -0.22
+       Tanggamus 1802  2019  76.55   71.35    5.20
+       Tanggamus 1802  2020  76.67   74.67    2.00
+ Lampung Selatan 1803  2018  76.48   70.76    5.72
+ Lampung Selatan 1803  2019  78.99   74.62    4.37
+   Lampung Timur 1804  2018  77.43   73.63    3.80
+   Lampung Timur 1804  2019  77.38   72.37    5.01
+  Lampung Tengah 1805  2018  75.43   71.96    3.47
+  Lampung Tengah 1805  2019  78.88   76.55    2.33
+   Lampung Utara 1806  2018  72.18   76.48   -4.30
+   Lampung Utara 1806  2019  71.35   78.99   -7.64
+       Way Kanan 1807  2018  73.63   78.24   -4.61
+       Way Kanan 1807  2019  72.37   82.29   -9.92
+   Tulang Bawang 1808  2018  78.24   75.43    2.81
+   Tulang Bawang 1808  2019  82.29   78.88    3.41
+
+==============================================================================
+== 3. BANDING NILAI IKP: proyek vs Sumber Provinsi (C), 2019-2024
+==============================================================================
+cocok vs Provinsi: 85 / 90 (94%)
+            nama tahun proyek provinsi selisih
+   Lampung Barat  2020  74.02    70.80    3.22
+       Tanggamus  2020  76.67    74.67    2.00
+ Lampung Selatan  2024  84.46    84.64   -0.18
+      Kota Metro  2019  75.85    78.00   -2.15
+      Kota Metro  2020  76.76    76.75    0.01
+
+==============================================================================
+== 4. UJI KUNCI: apakah umur seri proyek = seri NAMA resmi, atau KODE resmi?
+==============================================================================
+                nama kode_proyek kode_resmi_utk_nama cocok_vs_KODE_sendiri
+       Lampung Barat        1801                1804                     2
+           Tanggamus        1802                1806                     2
+     Lampung Selatan        1803                1801                     2
+       Lampung Timur        1804                1807                     2
+      Lampung Tengah        1805                1802                     2
+       Lampung Utara        1806                1803                     2
+           Way Kanan        1807                1808                     2
+       Tulang Bawang        1808                1805                     2
+           Pesawaran        1809                1809                     7
+           Pringsewu        1810                1810                     7
+              Mesuji        1811                1811                     7
+ Tulang Bawang Barat        1812                1812                     7
+       Pesisir Barat        1813                1813                     7
+ Kota Bandar Lampung        1871                1871                     7
+          Kota Metro        1872                1872                     7
+ cocok_vs_KODE_nama
+                  5
+                  4
+                  5
+                  5
+                  5
+                  5
+                  5
+                  5
+                  7
+                  7
+                  7
+                  7
+                  7
+                  7
+                  7
+
+TOTAL cocok vs KODE sendiri: 65 / 105 
+TOTAL cocok vs KODE milik nama: 88 / 105 
+
+==============================================================================
+== 5. SEAM 2019/2020 -> tiap seri = gabungan dua tempat
+==============================================================================
+  Lampung Barat          kode=1801 : 1801 1801 1804 1804 1804 1804 1804
+  Tanggamus              kode=1802 : 1802 1802 ? 1806 1806 1806 1806
+  Lampung Selatan        kode=1803 : 1803 1803 1801 1801 1801 1801 1801
+  Lampung Timur          kode=1804 : 1804 1804 1807 1807 1807 1807 1807
+  Lampung Tengah         kode=1805 : 1805 1805 1802 1802 1802 1802 1802
+  Lampung Utara          kode=1806 : 1806 1806 1803 1803 1803 1803 1803
+  Way Kanan              kode=1807 : 1807 1807 1808 1808 1808 1808 1808
+  Tulang Bawang          kode=1808 : 1808 1808 1805 1805 1805 1805 1805
+  Pesawaran              kode=1809 : 1809 1809/1872 1809 1809 1809 1809 1809
+  Pringsewu              kode=1810 : 1810 1810 1810 1810 1810 1810 1810
+  Mesuji                 kode=1811 : 1811 1811 1811/1872 1811 1811 1811 1811
+  Tulang Bawang Barat    kode=1812 : 1812 1812 1812 1812 1812 1812 1812
+  Pesisir Barat          kode=1813 : 1813 1813 1813 1813 1813 1813 1813
+  Kota Bandar Lampung    kode=1871 : 1871 1871 1871 1871 1871 1871 1871
+  Kota Metro             kode=1872 : 1872 1872 1872 1809/1872 1872 1811/1872 1872
+
+(kode yang muncul beda dari kode proyek = nilai itu milik wilayah LAIN)
+
+==============================================================================
+== 6. APAKAH LOMPATAN 2023 ITU NYATA DI SERI RESMI?
+==============================================================================
+ tahun   n mean_ikp delta
+  2018 514    69.09    NA
+  2019 514    71.29  2.20
+  2020 514    71.82  0.53
+  2021 514    72.14  0.32
+  2022 514    71.84 -0.30
+  2023 514    74.43  2.59
+  2024 514    75.11  0.68
+
+Lampung (sumber resmi):
+ tahun mean_ikp delta
+  2018    74.10    NA
+  2019    76.98  2.88
+  2020    77.43  0.45
+  2021    77.96  0.53
+  2022    78.61  0.65
+  2023    81.55  2.94
+  2024    82.58  1.03
+
+Kesimpulan: lompatan 2023 muncul di skala nasional -> BUKAN artefak data proyek.
+
+==============================================================================
+== 7. N YANG TERSEDIA UNTUK PERLUASAN SAMPEL
+==============================================================================
+kab/kota di sumber Bapanas: 514 
+kab/kota di 10 provinsi Sumatera: 140 | observasi panel (x7 tahun): 980 
+provinsi di sumber: 34 
+Catatan: file ini memuat 34 provinsi (belum termasuk pemekaran Papua 2022+).
+
+==============================================================================
+== 8. UJI PEMUNGKAS: banding 2018 vs PUBLIKASI PRIMER (PDF BKP 2018, Tabel 4 & 5)
+==============================================================================
+  Tulang Bawang Barat    PDF rank  45 skor  80.70 | proyek 2018  80.70  COCOK
+  Mesuji                 PDF rank  44 skor  80.82 | proyek 2018  80.82  COCOK
+  Pringsewu              PDF rank  84 skor  78.48 | proyek 2018  78.48  COCOK
+  Tulang Bawang          PDF rank  90 skor  78.24 | proyek 2018  78.24  COCOK
+  Lampung Timur          PDF rank 110 skor  77.43 | proyek 2018  77.43  COCOK
+  Lampung Selatan        PDF rank 132 skor  76.48 | proyek 2018  76.48  COCOK
+  Lampung Tengah         PDF rank 158 skor  75.43 | proyek 2018  75.43  COCOK
+  Way Kanan              PDF rank 199 skor  73.63 | proyek 2018  73.63  COCOK
+  Pesawaran              PDF rank 225 skor  72.54 | proyek 2018  72.54  COCOK
+  Lampung Utara          PDF rank 232 skor  72.18 | proyek 2018  72.18  COCOK
+  Tanggamus              PDF rank 236 skor  71.96 | proyek 2018  71.96  COCOK
+  Lampung Barat          PDF rank 256 skor  70.76 | proyek 2018  70.76  COCOK
+  Pesisir Barat          PDF rank 285 skor  67.99 | proyek 2018  67.99  COCOK
+  Kota Bandar Lampung    PDF rank  59 skor  68.93 | proyek 2018  68.93  COCOK
+  Kota Metro             PDF rank  71 skor  65.98 | proyek 2018  65.98  COCOK
+
+cocok vs PUBLIKASI PRIMER 2018: 15/15
+-> Bila 15/15: Y tahun 2018 proyek BENAR; file open-data Bapanas yang salah menempelkan nama.
+
+==============================================================================
+== 9. VINTAGE SERI: apakah nilai 2024 sama di dua file resmi?
+==============================================================================
+                nama ikp_12indikator ikp_ds90 ikp_proyek
+ Kota Bandar Lampung        67.04963    84.64      84.64
+          Kota Metro        82.86160    85.78      85.78
+       Lampung Barat        74.49676    76.18      76.18
+     Lampung Selatan        82.11737    84.46      84.46
+      Lampung Tengah        70.14903    84.93      84.93
+       Lampung Timur        70.84376    85.22      85.22
+       Lampung Utara        63.99581    76.82      76.82
+              Mesuji        70.69228    88.18      88.18
+           Pesawaran        71.91237    80.85      80.85
+       Pesisir Barat        70.69787    75.77      75.77
+           Pringsewu        71.14604    87.35      87.35
+           Tanggamus        73.59968    76.40      76.40
+       Tulang Bawang        71.68351    88.78      88.78
+ Tulang Bawang Barat        65.49994    83.74      83.74
+           Way Kanan        77.12495    79.61      79.61
+
+Selisih ds90 vs 12-indikator (2024):  17.59, 2.92, 1.68, 2.34, 14.78, 14.38, 12.82, 17.49, 8.94, 5.07, 16.2, 2.8, 17.1, 18.24, 2.49 
+-> Dua file resmi MEMBERI NILAI BERBEDA untuk tahun yang sama => vintage seri berbeda.
+
+==============================================================================
+== SELESAI
+==============================================================================

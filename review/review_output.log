@@ -1,0 +1,249 @@
+Warning messages:
+1: package 'plm' was built under R version 4.5.3 
+2: package 'lmtest' was built under R version 4.5.3 
+3: package 'zoo' was built under R version 4.5.3 
+4: package 'sandwich' was built under R version 4.5.3 
+
+========================================================================
+== 0. IDENTITAS DATA
+========================================================================
+N = 105 | G = 15 | T = 7 | range tahun: 2018 - 2024 
+NA total: 0 
+
+========================================================================
+== 1. TRACEABILITY: IKP 2018 vs publikasi resmi BKP (9 indikator)
+========================================================================
+           kabupaten   ikp resmi cocok
+       Lampung Barat 70.76 70.76  TRUE
+           Tanggamus 71.96 71.96  TRUE
+     Lampung Selatan 76.48 76.48  TRUE
+       Lampung Timur 77.43 77.43  TRUE
+      Lampung Tengah 75.43 75.43  TRUE
+       Lampung Utara 72.18 72.18  TRUE
+           Way Kanan 73.63 73.63  TRUE
+       Tulang Bawang 78.24 78.24  TRUE
+           Pesawaran 72.54 72.54  TRUE
+           Pringsewu 78.48 78.48  TRUE
+              Mesuji 80.82 80.82  TRUE
+ Tulang Bawang Barat 80.70 80.70  TRUE
+       Pesisir Barat 67.99 67.99  TRUE
+ Kota Bandar Lampung 68.93 68.93  TRUE
+          Kota Metro 65.98 65.98  TRUE
+COCOK: 15 dari 15 unit
+
+========================================================================
+== 2. BOBOT INDIKATOR PENYUSUN IKP (dari dokumen resmi)
+========================================================================
+IKP KABUPATEN (9 indikator, 3 aspek):
+                                      indikator bobot tumpang_tindih
+ Rasio konsumsi normatif vs ketersediaan bersih 0.300               
+  Persentase penduduk di bawah garis kemiskinan 0.150  X2 proyek ini
+                     RT pengeluaran pangan >65% 0.075               
+                         RT tanpa akses listrik 0.075               
+        Rata-rata lama sekolah perempuan >15 th 0.050   komponen IPM
+                      RT tanpa akses air bersih 0.150               
+                  Penduduk per tenaga kesehatan 0.050               
+                     Prevalensi balita stunting 0.050               
+                 Angka harapan hidup saat lahir 0.100   komponen IPM
+TOTAL bobot: 1 
+
+IKP KOTA (8 indikator, aspek ketersediaan DIHAPUS, bobot 0.30 dialihkan):
+  kemiskinan 0.20 | pengeluaran pangan 0.125 | tanpa listrik 0.125
+  RLS perempuan 0.08 | tanpa air bersih 0.18 | tenaga kesehatan 0.08
+  stunting 0.08 | AHH 0.13  -> total 1.00
+
+========================================================================
+== 3. SEBERAPA BESAR MODEL DIJELASKAN 'MEKANIS' OLEH KOMPONEN INDEKS
+========================================================================
+Semua model sudah memuat dummies wilayah (FE), N=105
+  FE saja                              R2=0.6030  adjR2=0.5412
+  FE + kemiskinan (komponen IKP)       R2=0.8050  adjR2=0.7721
+  FE + ipm (komponen via AHH/RLS)      R2=0.8425  adjR2=0.8159
+  FE + produksi_padi                   R2=0.6461  adjR2=0.5864
+  FE + pdrb                            R2=0.7014  adjR2=0.6510
+  FE + MODEL UTAMA (5 var + covid)     R2=0.8535  adjR2=0.8207
+  FE + MODEL UTAMA + year FE           R2=0.8823  adjR2=0.8470
+
+Selisih R2: FE->FE+kemiskinan = 0.202 
+Selisih R2: (FE+kemiskinan)->(FE+model utama 5 var) = 0.0485 
+
+========================================================================
+== 4. EFEK TAHUN: seberapa besar dinamika yang sebenarnya 'tren bersama'
+========================================================================
+R2 variasi within (deviasi dari rata-rata wilayah) yang dijelaskan year dummies:
+  ikp         var(within)= 10.3913 | R2 thd tahun=0.6775 | var sisa=  3.35153
+  ipm         var(within)=  0.9420 | R2 thd tahun=0.9717 | var sisa=  0.02667
+  kemiskinan  var(within)=  0.7570 | R2 thd tahun=0.8787 | var sisa=  0.09181
+  ln_pdrb     var(within)=  0.0017 | R2 thd tahun=0.6774 | var sisa=  0.00054
+  ln_padi     var(within)=  0.0222 | R2 thd tahun=0.3087 | var sisa=  0.01532
+
+Profil within IKP per tahun (deviasi dari rata-rata wilayah):
+  2018   2019   2020   2021   2022   2023   2024 
+-4.375 -1.499 -0.917 -0.518  0.130  3.077  4.103 
+
+Rata-rata per tahun + perubahan YoY:
+ tahun   ikp   ipm kemiskinan d_ikp
+  2018 74.10 67.92      12.57    NA
+  2019 76.98 68.51      12.09  2.88
+  2020 77.56 68.66      11.82  0.58
+  2021 77.96 68.89      12.15  0.40
+  2022 78.61 69.51      11.12  0.65
+  2023 81.55 70.18      10.65  2.94
+  2024 82.58 70.87      10.19  1.03
+
+========================================================================
+== 5. UJI F: year dummies wajib? + SPESIFIKASI UTAMA
+========================================================================
+F gabungan year dummies (FE+tanpa covid vs FE+yearFE):
+Wald test
+
+Model 1: ikp ~ kode_f + ipm + kemiskinan + ln_pdrb + ln_padi
+Model 2: ikp ~ kode_f + tahun_f + ipm + kemiskinan + ln_pdrb + ln_padi
+  Res.Df Df      F    Pr(>F)    
+1     86                        
+2     80  6 6.8723 6.576e-06 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+FE + COVID (spesifikasi laporan), cluster-robust:
+           Estimate Std. Error Pr(>|t|)
+ipm          1.9587     0.4428   0.0000
+kemiskinan  -0.4893     0.4773   0.3081
+ln_pdrb     13.3766    10.4897   0.2057
+ln_padi      1.5566     1.0343   0.1360
+covid        1.2415     0.7340   0.0944
+
+FE + YEAR FE, cluster-robust:
+           Estimate Std. Error Pr(>|t|)
+ipm         -2.2276     1.6481   0.1803
+kemiskinan   0.7814     0.8129   0.3393
+ln_pdrb      1.6268     8.2814   0.8448
+ln_padi      2.5274     1.2722   0.0504
+
+First difference murni:
+            Estimate Std. Error Pr(>|t|)
+(Intercept)   0.5786     0.4122   0.1641
+d_ipm         1.6048     0.7171   0.0279
+d_kem        -0.0772     0.3770   0.8382
+d_lp          0.9214     6.3755   0.8854
+
+FD + year dummies:
+            Estimate Std. Error Pr(>|t|)
+(Intercept)   2.7356     1.1496   0.0197
+d_ipm         0.1578     1.2329   0.8985
+d_kem        -0.0311     1.1075   0.9777
+d_lp         -2.6757     7.7633   0.7313
+
+========================================================================
+== 6. KOTA vs KABUPATEN: IKP-nya definisi berbeda
+========================================================================
+Delta 2022->2023:
+ kode d_ikp d_kemiskinan
+ 1801  1.05        -0.54
+ 1802  0.59        -0.46
+ 1803  3.65        -0.35
+ 1804  0.77        -0.18
+ 1805  3.48        -0.31
+ 1806 -0.06        -1.24
+ 1807  0.97        -0.74
+ 1808  1.26        -0.38
+ 1809  0.03        -0.96
+ 1810  3.24        -0.20
+ 1811  0.59        -0.11
+ 1812  3.75        -0.19
+ 1813  4.61        -0.35
+ 1871  9.96        -0.44
+ 1872 10.31        -0.59
+IKP naik di 14/15 unit | kemiskinan turun di 15/15 unit
+rata-rata delta IKP: kabupaten=1.84 | kota=10.14
+
+Padi: dokumen BKP menyatakan produksi padi/jagung/ubi memakai ANGKA TETAP 2014-2016.
+Bukti data: variasi produksi_padi di dalam wilayah relatif kecil.
+  var(within) produksi_padi = 782522680.5 | var(within) ikp = 10.391
+
+========================================================================
+== 7. INFERENSI DENGAN G=15
+========================================================================
+Pesaran CD (dependensi lintas wilayah):
+
+	Pesaran CD test for cross-sectional dependence in panels
+
+data:  ikp ~ ipm + kemiskinan + ln_pdrb + ln_padi + covid
+z = 0.1284, p-value = 0.8978
+alternative hypothesis: cross-sectional dependence
+
+
+Robust Hausman (Mundlak: pooled + rata-rata kelompok, Wald klaster):
+  W = 24.44 | df = 4 | p = 6.523e-05  (H0=RE cukup; tolak -> FE)
+  (Hausman klasik pada laporan: chi2 = 57.774, p = 3.5e-11)
+
+Jackknife per tahun (koef IPM, FE+COVID):
+  tanpa 2018 : ipm =  1.592 (SE 0.384, p=0.0001)
+  tanpa 2019 : ipm =  1.913 (SE 0.444, p=0.0001)
+  tanpa 2020 : ipm =  2.049 (SE 0.604, p=0.0012)
+  tanpa 2021 : ipm =  1.994 (SE 0.504, p=0.0002)
+  tanpa 2022 : ipm =  2.081 (SE 0.457, p=0.0000)
+  tanpa 2023 : ipm =  1.817 (SE 0.464, p=0.0002)
+  tanpa 2024 : ipm =  2.258 (SE 0.579, p=0.0002)
+
+Jackknife per kabupaten (koef IPM, FE+COVID):
+                 kab   ipm      p
+       Lampung Utara 1.708 0.0001
+ Kota Bandar Lampung 1.746 0.0000
+       Lampung Timur 1.880 0.0001
+           Pesawaran 1.880 0.0001
+           Pringsewu 1.930 0.0000
+              Mesuji 1.940 0.0044
+      Lampung Tengah 1.943 0.0001
+       Tulang Bawang 1.955 0.0000
+       Lampung Barat 1.960 0.0001
+     Lampung Selatan 1.987 0.0000
+          Kota Metro 1.999 0.0000
+           Way Kanan 2.049 0.0000
+           Tanggamus 2.068 0.0000
+       Pesisir Barat 2.098 0.0002
+ Tulang Bawang Barat 2.203 0.0001
+range koef IPM: 1.708 s.d. 2.203 | p<0.05 pada 15/15 drop
+
+Wild cluster bootstrap (Rademacher, klaster kabupaten, B=999):
+  FE+COVID  : p_cluster(HC1) = 0.0000 | p_WCB = 0.1090
+  FE+YearFE : p_cluster(HC1) = 0.1803 | p_WCB = 0.4250
+
+========================================================================
+== 8. ESTIMASI TERPISAH: 13 KABUPATEN vs 2 KOTA
+========================================================================
+13 KABUPATEN (n=91) FE+COVID:
+           Estimate Std. Error Pr(>|t|)
+ipm          1.7869     0.2691   0.0000
+kemiskinan  -0.4396     0.3206   0.1745
+ln_pdrb      3.1917     6.7336   0.6369
+ln_padi      2.6161     1.0848   0.0184
+covid        0.8354     0.5807   0.1546
+
+13 KABUPATEN FE+YearFE:
+           Estimate Std. Error Pr(>|t|)
+ipm          0.2256     1.2807   0.8607
+kemiskinan   0.0331     0.5463   0.9519
+ln_pdrb     -3.3929     8.0547   0.6749
+ln_padi      3.6751     1.4669   0.0146
+
+2 KOTA: hanya 14 observasi -> FE dengan 5 koefisien + 2 dummies tidak bermakna.
+           kabupaten tahun   ikp kemiskinan   ipm
+ Kota Bandar Lampung  2018 68.93       9.04 76.63
+ Kota Bandar Lampung  2019 73.49       8.71 77.33
+ Kota Bandar Lampung  2020 71.62       8.81 77.44
+ Kota Bandar Lampung  2021 74.17       9.11 77.58
+ Kota Bandar Lampung  2022 73.41       8.21 78.01
+ Kota Bandar Lampung  2023 83.37       7.77 78.56
+ Kota Bandar Lampung  2024 84.64       7.37 79.19
+          Kota Metro  2018 65.98       9.14 76.22
+          Kota Metro  2019 75.85       8.68 76.77
+          Kota Metro  2020 76.76       8.47 77.19
+          Kota Metro  2021 76.74       8.93 77.49
+          Kota Metro  2022 73.35       7.87 77.89
+          Kota Metro  2023 83.66       7.28 78.36
+          Kota Metro  2024 85.78       6.78 78.93
+
+========================================================================
+== SELESAI
+========================================================================

@@ -1,0 +1,4 @@
+"spesifikasi","beta_lnpdrb","se_lnpdrb","p_lnpdrb","beta_lnpadi","se_lnpadi","p_lnpadi","R2"
+"RHS bersih + COVID (N=105)",50.632,13.121,2e-04,4.544,2.08,0.0316,0.7395
+"RHS bersih + YearFE (N=105)",2.83,8.483,0.7395,2.77,1.05,0.01,0.8768
+"RHS bersih + YearFE (13 kab, n=91)",-3.633,7.618,0.6349,3.665,1.175,0.0026,0.9306

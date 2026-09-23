@@ -1,0 +1,287 @@
+Warning messages:
+1: package 'plm' was built under R version 4.5.3 
+2: package 'lmtest' was built under R version 4.5.3 
+3: package 'zoo' was built under R version 4.5.3 
+4: package 'sandwich' was built under R version 4.5.3 
+=== 0. IDENTITAS DATA ===
+N = 105 | G = 15 | T = 7 | tahun: 2018 - 2024 
+Catatan: kolom `kode` = nomor urut internal (BUKAN kode BPS).
+Untuk join ke data luar, gunakan kolom `kabupaten` (nama).
+
+
+==========================================================================
+== 1. PERBANDINGAN SPESIFIKASI (cluster-robust HC1, klaster kabupaten)
+==========================================================================
+
+[a] FE + dummy COVID  (spesifikasi yang dilaporkan R/04)
+             Estimate Std. Error Pr(>|t|)
+(Intercept) -201.6043    93.5109   0.0339
+kode_f1802     1.4827     1.2600   0.2426
+kode_f1803    -3.2239     4.7911   0.5028
+kode_f1804    -4.6939     3.7123   0.2095
+kode_f1805   -11.4217     6.1919   0.0686
+kode_f1806    -3.1890     5.2945   0.5486
+kode_f1807    -0.4454     2.1845   0.8389
+kode_f1808    -5.3705     7.7309   0.4892
+kode_f1809     2.2407     3.7585   0.5526
+kode_f1810     0.9481     1.4258   0.5079
+kode_f1811     4.6240     7.8209   0.5559
+kode_f1812     1.2770     6.8155   0.8518
+kode_f1813     4.8818     1.9953   0.0165
+kode_f1871   -23.8309    11.0575   0.0340
+kode_f1872   -21.7047     6.1110   0.0006
+ipm            1.9587     0.4428   0.0000
+kemiskinan    -0.4893     0.4773   0.3081
+ln_pdrb       13.3766    10.4897   0.2057
+ln_padi        1.5566     1.0343   0.1360
+covid          1.2415     0.7340   0.0944
+
+[b] FE + YEAR FE  (spesifikasi revisi)
+           Estimate Std. Error Pr(>|t|)
+ipm         -2.2276     1.6481   0.1803
+kemiskinan   0.7814     0.8129   0.3393
+ln_pdrb      1.6268     8.2814   0.8448
+ln_padi      2.5274     1.2722   0.0504
+
+[catatan] R/04 memakai HC3 (arellano) -> SE IPM = 0.414; HC1 di sini = 0.443. Selisih kecil, kesimpulan sama.
+HC3 (untuk kontinuitas dgn laporan lama): IPM SE = 0.4727 
+
+[c] First difference (FD) murni
+            Estimate Std. Error Pr(>|t|)
+(Intercept)   0.5786     0.4122   0.1641
+d_ipm         1.6048     0.7171   0.0279
+d_kem        -0.0772     0.3770   0.8382
+d_lp          0.9214     6.3755   0.8854
+d_lpd        -1.7274     1.1419   0.1340
+
+[d] FD + year dummies
+            Estimate Std. Error Pr(>|t|)
+(Intercept)   2.7356     1.1496   0.0197
+d_ipm         0.1578     1.2329   0.8985
+d_kem        -0.0311     1.1075   0.9777
+d_lp         -2.6757     7.7633   0.7313
+
+==========================================================================
+== 2. APAKAH YEAR DUMMIES WAJIB? (uji F gabungan)
+==========================================================================
+Wald test
+
+Model 1: ikp ~ kode_f + ipm + kemiskinan + ln_pdrb + ln_padi
+Model 2: ikp ~ kode_f + tahun_f + ipm + kemiskinan + ln_pdrb + ln_padi
+  Res.Df Df      F    Pr(>F)    
+1     86                        
+2     80  6 6.8723 6.576e-06 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+==========================================================================
+== 3. SEBERAPA BESAR DINAMIKA ITU SEBENARNYA 'TREN BERSAMA'?
+==========================================================================
+R2 variasi within (deviasi dari rata-rata wilayah) yang dijelaskan year dummies:
+      variabel   var_within R2_thd_tahun     var_sisa
+           ikp 1.039129e+01       0.6775 3.351530e+00
+           ipm 9.420300e-01       0.9717 2.667000e-02
+    kemiskinan 7.570400e-01       0.8787 9.181000e-02
+       ln_pdrb 1.680000e-03       0.6774 5.400000e-04
+       ln_padi 2.216000e-02       0.3087 1.532000e-02
+ produksi_padi 7.825227e+08       0.2319 6.010768e+08
+
+R2 bertingkat (semua sudah memuat dummies wilayah / FE):
+  FE saja                                R2=0.6030  adjR2=0.5412
+  FE + kemiskinan                        R2=0.8050  adjR2=0.7721
+  FE + ipm                               R2=0.8425  adjR2=0.8159
+  FE + produksi_padi                     R2=0.6461  adjR2=0.5864
+  FE + pdrb                              R2=0.7014  adjR2=0.6510
+  FE + MODEL UTAMA (5 var, tanpa year)   R2=0.8535  adjR2=0.8207
+  FE + MODEL UTAMA + YEAR FE             R2=0.8823  adjR2=0.8470
+
+Profil within IKP per tahun (deviasi dari rata-rata wilayah):
+  2018   2019   2020   2021   2022   2023   2024 
+-4.375 -1.499 -0.917 -0.518  0.130  3.077  4.103 
+
+Rata-rata per tahun + perubahan YoY:
+ tahun   ikp   ipm kemiskinan d_ikp
+  2018 74.10 67.92      12.57    NA
+  2019 76.98 68.51      12.09  2.88
+  2020 77.56 68.66      11.82  0.58
+  2021 77.96 68.89      12.15  0.40
+  2022 78.61 69.51      11.12  0.65
+  2023 81.55 70.18      10.65  2.94
+  2024 82.58 70.87      10.19  1.03
+
+==========================================================================
+== 4. ROBUST HAUSMAN (Mundlak: pooled + rata-rata kelompok)
+==========================================================================
+  W = 24.44 | df = 4 | p = 6.523e-05  -> tolak H0 (RE cukup); FE tetap tepat
+  (Hausman klasik di laporan lama: chi2 = 57.774, p = 3.5e-11 -- dijalankan tanpa
+   memperhitungkan serial correlation yang sudah terdeteksi Wooldridge p=0.005,
+   sehingga bentuknya tidak sah untuk inferensi. Versi robust di atas menggantikannya.)
+
+==========================================================================
+== 5. INFERENSI DENGAN G = 15
+==========================================================================
+Dependensi lintas wilayah (Pesaran CD):
+
+	Pesaran CD test for cross-sectional dependence in panels
+
+data:  ikp ~ ipm + kemiskinan + ln_pdrb + ln_padi + covid
+z = 0.1284, p-value = 0.8978
+alternative hypothesis: cross-sectional dependence
+
+
+Driscoll-Kraay SE (tahan dependensi lintas wilayah & autokorelasi):
+-- FE + COVID --
+           Estimate Std. Error Pr(>|t|)
+ipm          1.9587     0.2787   0.0000
+kemiskinan  -0.4893     0.1768   0.0069
+ln_pdrb     13.3766     5.4444   0.0160
+ln_padi      1.5566     0.9483   0.1044
+covid        1.2415     0.2837   0.0000
+-- FE + Year FE --
+           Estimate Std. Error Pr(>|t|)
+ipm         -2.2276     1.2571   0.0802
+kemiskinan   0.7814     0.3059   0.0125
+ln_pdrb      1.6268     3.5350   0.6466
+ln_padi      2.5274     0.9286   0.0080
+
+Wild cluster bootstrap (Rademacher, B=999, klaster kabupaten):
+  FE+COVID  : t = 4.423 | p_cluster(HC1) = 0.0000 | p_WCB = 0.1090
+  FE+YearFE : t = -1.352 | p_cluster(HC1) = 0.1803 | p_WCB = 0.4250
+
+==========================================================================
+== 6. DAYA UJI (MDE) -- membedakan 'tidak ada efek' dari 'tidak bertenaga'
+==========================================================================
+df = G-1 = 14 | t(0.975) = 2.145 | t(0.80) = 0.868
+   variabel beta_FEcovid se_FEcovid MDE_FEcovid beta_FEyear se_FEyear
+        ipm        1.959      0.443       1.334      -2.228     1.648
+ kemiskinan       -0.489      0.477       1.438       0.781     0.813
+    ln_pdrb       13.377     10.490      31.604       1.627     8.281
+    ln_padi        1.557      1.034       3.116       2.527     1.272
+ MDE_FEyear sd_within MDE_dlm_sd_within
+      4.966     0.971              5.11
+      2.449     0.870              2.81
+     24.951     0.041            608.56
+      3.833     0.149             25.72
+
+MDE di atas = efek terkecil yang bisa dideteksi (alpha 5%, power 80%).
+Kolom terakhir: MDE dibagi simpangan baku within. Nilai >> 1 berarti uji ini
+hanya mampu mendeteksi efek yang jauh lebih besar daripada variasi data yang ada.
+
+==========================================================================
+== 7. ESTIMASI TERPISAH: 13 KABUPATEN vs 2 KOTA
+==========================================================================
+IKP kabupaten memakai 9 indikator; IKP kota memakai 8 indikator dengan bobot berbeda
+(aspek ketersediaan berbobot 0,30 dihapus, lalu bobotnya dialihkan proporsional).
+Karena itu 2 kota tidak digabung dalam sampel estimasi utama.
+
+13 KABUPATEN (n=91) FE + COVID:
+             Estimate Std. Error Pr(>|t|)
+(Intercept) -103.0142    66.0631   0.1232
+kode_f1802     0.9667     1.2737   0.4503
+kode_f1803     0.8601     4.4493   0.8473
+kode_f1804    -1.7025     4.0409   0.6748
+kode_f1805    -5.7780     5.6796   0.3124
+kode_f1806     1.0715     4.0628   0.7927
+kode_f1807     1.4637     1.6290   0.3718
+kode_f1808     1.5214     5.8007   0.7938
+kode_f1809     5.1600     3.1211   0.1026
+kode_f1810     2.3341     1.3629   0.0910
+kode_f1811     9.3135     5.9487   0.1218
+kode_f1812     7.1928     3.5843   0.0485
+kode_f1813     5.7415     1.4833   0.0002
+ipm            1.7869     0.2691   0.0000
+kemiskinan    -0.4396     0.3206   0.1745
+ln_pdrb        3.1917     6.7336   0.6369
+ln_padi        2.6161     1.0848   0.0184
+covid          0.8354     0.5807   0.1546
+
+13 KABUPATEN (n=91) FE + Year FE:
+           Estimate Std. Error Pr(>|t|)
+ipm          0.2256     1.2807   0.8607
+kemiskinan   0.0331     0.5463   0.9519
+ln_pdrb     -3.3929     8.0547   0.6749
+ln_padi      3.6751     1.4669   0.0146
+
+2 KOTA: n = 14 -> estimasi FE dengan 5 koefisien tidak bermakna; hanya deskriptif.
+           kabupaten tahun   ikp kemiskinan   ipm
+ Kota Bandar Lampung  2018 68.93       9.04 76.63
+ Kota Bandar Lampung  2019 73.49       8.71 77.33
+ Kota Bandar Lampung  2020 71.62       8.81 77.44
+ Kota Bandar Lampung  2021 74.17       9.11 77.58
+ Kota Bandar Lampung  2022 73.41       8.21 78.01
+ Kota Bandar Lampung  2023 83.37       7.77 78.56
+ Kota Bandar Lampung  2024 84.64       7.37 79.19
+          Kota Metro  2018 65.98       9.14 76.22
+          Kota Metro  2019 75.85       8.68 76.77
+          Kota Metro  2020 76.76       8.47 77.19
+          Kota Metro  2021 76.74       8.93 77.49
+          Kota Metro  2022 73.35       7.87 77.89
+          Kota Metro  2023 83.66       7.28 78.36
+          Kota Metro  2024 85.78       6.78 78.93
+
+==========================================================================
+== 8. KENAPA koefisien tanpa efek tahun menyesatkan: dekomposisi
+==========================================================================
+Koef IPM tanpa kontrol kecuali FE wilayah : 2.58 
+Koef IPM setelah year dummies dimasukkan  : -1.907 
+Korelasi within ipm vs tahun              : 0.965 
+Korelasi within ikp vs tahun              : 0.793 
+
+==========================================================================
+== 9. SPESIFIKASI RHS BERSIH (tanpa variabel penyusun indeks IKP)
+==========================================================================
+Kemiskinan (bobot 0,15 kab / 0,20 kota) dan dua komponen IPM (AHH 0,10/0,13;
+RLS perempuan 0,05/0,08) adalah indikator PENYUSUN IKP -> koefisiennya bukan
+estimasi pengaruh. Di sini keduanya dikeluarkan dari sisi kanan.
+
+-- [1] RHS bersih + dummy COVID --
+        Estimate Std. Error Pr(>|t|)
+ln_pdrb  50.6317    13.1209   0.0002
+ln_padi   4.5443     2.0795   0.0316
+covid     1.6818     0.7670   0.0310
+   R2 = 0.7395 | adjR2 = 0.6886
+
+-- [2] RHS bersih + YEAR FE (kandidat model utama revisi, N=105) --
+        Estimate Std. Error Pr(>|t|)
+ln_pdrb   2.8302     8.4831   0.7395
+ln_padi   2.7699     1.0499   0.0100
+   R2 = 0.8768 | adjR2 = 0.8437
+
+Uji F gabungan year dummies pada RHS bersih:
+Wald test
+
+Model 1: ikp ~ kode_f + ln_pdrb + ln_padi
+Model 2: ikp ~ kode_f + tahun_f + ln_pdrb + ln_padi
+  Res.Df Df      F    Pr(>F)    
+1     88                        
+2     82  6 22.221 2.298e-15 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+-- [3] RHS bersih + YEAR FE, 13 KABUPATEN (n=91) --
+        Estimate Std. Error Pr(>|t|)
+ln_pdrb  -3.6329     7.6183   0.6349
+ln_padi   3.6652     1.1746   0.0026
+   R2 = 0.9306
+
+WCB pada RHS bersih (B=999):
+  ln_pdrb, N=105 + year FE : t = 0.334 | p_cluster = 0.7395 | p_WCB = 0.7470
+  ln_padi,  N=105 + year FE : t = 2.638 | p_cluster = 0.0100 | p_WCB = 0.2490
+  ln_padi,  13 kab + year FE: t = 3.120 | p_cluster = 0.0026 | p_WCB = 0.1920
+
+[catatan] Uji WCB baris terakhir ini adalah syarat yang diminta DESIGN_REVIEW 3.2
+sebelum koef ln(Padi)=3,675 (p=0,0146) boleh disebut temuan; kalau p_WCB > 0,05
+maka angka itu tetap non-temuan, bukan hasil positif.
+                        spesifikasi beta_lnpdrb se_lnpdrb p_lnpdrb beta_lnpadi
+         RHS bersih + COVID (N=105)      50.632    13.121   0.0002       4.544
+        RHS bersih + YearFE (N=105)       2.830     8.483   0.7395       2.770
+ RHS bersih + YearFE (13 kab, n=91)      -3.633     7.618   0.6349       3.665
+ se_lnpadi p_lnpadi     R2
+     2.080   0.0316 0.7395
+     1.050   0.0100 0.8768
+     1.175   0.0026 0.9306
+
+
+Tabel disimpan: output/tabel_4_4_FEcovid.csv, output/tabel_4_4_FEyear.csv, output/tabel_4_5_mde.csv, output/tabel_4_6_rhs_bersih.csv
+
+=== SELESAI R/11 ===

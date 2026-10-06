@@ -41,7 +41,9 @@ jejak sumber ada di `review/timeseries/SOURCES.md`.
   untuk drift. Tiga tahun target tidak cukup untuk klaim keunggulan umum.
 - Perbandingan input asal ke provinsi 85/90; sesudah satu koreksi analisis 86/90.
   Metodologi 2018 diperiksa ulang dari PDF; 2019 memiliki bukti cuplikan primer
-  terindeks. Audit penuh parameter normalisasi dan rincian 2024 belum terverifikasi.
+  terindeks. Halaman teknis primer 2024 kini diperiksa (definisi, bobot, input 2023,
+  rumus umum). Audit penuh 2019 dan parameter normalisasi identik/harmonisasi
+  antar-edisi tetap belum terverifikasi.
 - Seluruh hasil **eksploratif dan bersyarat**; tidak ada klaim sebab-akibat atau
   kesimpulan perubahan kabupaten sepanjang 2018–2024 melintasi batas definisi.
 - Data mentah, CSV bersih, skrip panel lama, dan kedua laporan lama tetap identik.

@@ -15,7 +15,7 @@ di `R/timeseries/methodology.R`. Matriks yang diekspor berada di
 | 2021 | [IKP 2021](https://repository.pertanian.go.id/server/api/core/bitstreams/0700d4be-634a-4f89-820c-dbd06fe686b5/content), PDF halaman 10 dan 13–14 | Komponen ketersediaan juga mencakup stok beras daerah; input produksi 2020. |
 | 2022 | [IKP 2022](https://badanpangan.go.id/storage/app/media/2023/Buku%20Digital/Buku%20Indeks%20Ketahanan%20Pangan%202022%20Signed.pdf), PDF halaman 12 dan 15–16 | Sagu juga tercantum pada komponen ketersediaan; input produksi 2021. |
 | 2023 | [IKP 2023](https://data.badanpangan.go.id/nfs_storage/public/publication/documents/1728546912.pdf), PDF halaman 12–15 | Komponen memuat sagu dan stok daerah; Susenas dan SSGI 2022. |
-| 2024 | [Laporan Kinerja Deputi Bidang Kerawanan Pangan dan Gizi 2024](https://esakip.badanpangan.go.id/dok/pk/dok_202541754360657.pdf), PDF halaman 34 dan 36–37 | Struktur 9/8 indikator; komponen ketersediaan juga menyebut bantuan pangan CPP. Bobot lengkap dan normalisasi belum diaudit di publikasi teknis. |
+| 2024 | [FSVA Nasional 2024](https://data.badanpangan.go.id/download/document/publication/76/1738309499.pdf/pdf), PDF halaman 36–37 dan 39–40 (cetak 32–33 dan 35–36) | Halaman teknis primer diperiksa: definisi, input 2023, bobot 9/8, standardisasi z-score/distance to scale. Sagu tercantum pada tabel definisi; tabel bobot meringkas komoditas tanpa sagu. Bantuan CPP/CPPD dan stunting SKI 2023 tercantum. |
 
 Nomor halaman di atas adalah posisi halaman PDF (mulai dari 1), bukan nomor
 halaman tercetak. Kurasi menyimpan keduanya bila tersedia. Catatan merupakan
@@ -60,17 +60,28 @@ Metro 2019 sebesar 75,85 didukung cuplikan primer terindeks dan
 [RPJPD Kota Metro 2025–2045](https://bappeda.metrokota.go.id/wp-content/uploads/2025/11/RPJPD_KOTA-METRO_2025-2045.pdf),
 Tabel 2.7, halaman cetak II-11. Lampung Selatan 2024 sebesar 84,46 didukung
 [dokumen pemerintah Provinsi Lampung](https://bappeda.lampungprov.go.id/index.php/berkas/uploads/n5PoPB1JTmtfmMl4t2cJMk8QnWaKthusWh9kfrxI.pdf),
-tabel IKP kabupaten/kota 2024. Kedua PDF terakhir hanya terbaca melalui cuplikan
-terindeks; status ini dibedakan dari publikasi primer PDF yang diperiksa penuh.
+tabel IKP kabupaten/kota 2024. Saat pemeriksaan awal kedua dokumen terakhir hanya
+terbaca melalui cuplikan terindeks. Lampung Selatan 2024 kini juga terkonfirmasi
+**84,46 pada publikasi primer**, PDF hlm 60 (cetak 56), Tabel 4.1, peringkat 84.
+Posisi nama dan nilai diperiksa pada baris yang sama. Metro 2019 tetap berbukti parsial.
 Input asal tetap 85/90 cocok; nilai analisis sesudah satu koreksi 86/90 cocok.
 
 Publikasi teknis [FSVA Nasional 2024](https://data.badanpangan.go.id/statisticpublications/pke)
 ditemukan dengan [tautan unduh resmi](https://data.badanpangan.go.id/download/document/publication/76/1738309499.pdf/pdf).
-Pembaca web menolak ukuran sekitar 31 MB. Usaha akses lokal juga dicatat sebagai
-usaha akses, bukan bukti bahwa bobot/normalisasi 2024 sudah diverifikasi.
-Katalog perpustakaan resmi memiliki tombol baca yang mengarah ke login.
-Matriks menambahkan kolom normalisasi umum serta konfirmasi parameter identik
-dan harmonisasi; keduanya tetap FALSE karena belum ada bukti lengkap.
+Pembaca web menolak ukuran sekitar 31 MB. Pemeriksaan lokal akhirnya berhasil
+dengan HTTP Range dari URL resmi, mengambil awalan dokumen, tabel xref, dan objek
+font. pdfminer.six membaca halaman terpilih dengan batas maxpages, bukan seluruh
+dokumen yang bagian lainnya belum diunduh. Definisi/input diperiksa pada PDF hlm
+36–37; bobot/rumus pada hlm 39–40; peringkat pada hlm 60 dan 65. Ini pemeriksaan
+halaman primer, bukan klaim bahwa seluruh halaman/input pembentuk indeks diaudit.
+Cache parsial tidak dimasukkan ke repo atau dianggap salinan lengkap untuk hash.
+
+Bobot metadata ditulis dalam urutan indikator kanonis. Publikasi 2024 memindahkan
+urutan air bersih, harapan hidup, dan sekolah perempuan; pencocokan berdasarkan
+nama indikator. Kedua urutan tercantum pada matriks audit. Katalog 2019 memiliki
+tombol baca yang mengarah ke login; URL lama mengembalikan 404 pada unduhan lokal.
+Cuplikan primer terindeks tetap menjadi bukti parsial. Parameter normalisasi identik
+dan harmonisasi tetap FALSE; rumus umum sama tidak membuktikan acuan yang sama.
 
 Sensitivitas memakai tiga skenario nilai dan pengeluaran satu tahun target.
 Pengeluaran target 2022 mengubah metode dengan MAE lebih kecil menjadi drift.

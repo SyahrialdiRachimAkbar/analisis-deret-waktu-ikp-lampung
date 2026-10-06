@@ -4,7 +4,7 @@
 
 Laporan Project Sains Data. Dokumen ini dihasilkan oleh pipeline R dari data yang tersedia; tabel tidak diisi dengan angka perkiraan.
 
-> **Status interpretasi: eksploratif dan bersyarat.** Audit menemukan perubahan rincian komponen ketersediaan pada dokumen tahunan kabupaten. Pipeline memakai batas konservatif pada 2021, 2022, dan 2024. Seluruh skor tetap ditampilkan, tetapi perubahan dan ramalan tidak melintasi batas tersebut. Harmonisasi penuh seri, khususnya metadata 2019 dan rincian teknis 2024, belum terbukti.
+> **Status interpretasi: eksploratif dan bersyarat.** Audit menemukan perubahan rincian komponen ketersediaan pada dokumen tahunan kabupaten. Pipeline memakai batas konservatif pada 2021, 2022, dan 2024. Seluruh skor tetap ditampilkan, tetapi perubahan dan ramalan tidak melintasi batas tersebut. Metode umum 2024 diperiksa pada publikasi teknis primer; audit penuh 2019 dan identitas parameter standardisasi antar-edisi/harmonisasi seri belum terbukti.
 
 ## Ringkasan
 
@@ -43,7 +43,7 @@ Matriks di bawah merangkum fakta dokumen primer yang berhasil diperiksa dan bagi
 | 2021 | [IKP 2021](https://repository.pertanian.go.id/server/api/core/bitstreams/0700d4be-634a-4f89-820c-dbd06fe686b5/content) | Padi, jagung, ubi kayu, ubi jalar, stok beras daerah | TRUE | terverifikasi_parsial |
 | 2022 | [IKP 2022](https://badanpangan.go.id/storage/app/media/2023/Buku%20Digital/Buku%20Indeks%20Ketahanan%20Pangan%202022%20Signed.pdf) | Padi, jagung, ubi kayu, ubi jalar, sagu, stok beras daerah | TRUE | terverifikasi_parsial |
 | 2023 | [IKP 2023](https://data.badanpangan.go.id/nfs_storage/public/publication/documents/1728546912.pdf) | Padi, jagung, ubi kayu, ubi jalar, sagu, stok beras daerah | FALSE | terverifikasi_parsial |
-| 2024 | [Laporan Kinerja Deputi Bidang Kerawanan Pangan dan Gizi 2024](https://esakip.badanpangan.go.id/dok/pk/dok_202541754360657.pdf) | Padi, jagung, ubi kayu, ubi jalar, sagu, stok/CPPD, bantuan pangan CPP | TRUE | terverifikasi_parsial |
+| 2024 | [FSVA Nasional 2024 (publikasi teknis primer; halaman terpilih diperiksa)](https://data.badanpangan.go.id/download/document/publication/76/1738309499.pdf/pdf) | Padi, jagung, ubi kayu, ubi jalar, sagu, stok/CPPD, bantuan pangan CPP | TRUE | terverifikasi_parsial |
 
 Dokumen 2020 menyebut empat komoditas. Dokumen 2021 juga menyebut stok beras daerah; 2022 menambahkan sagu; rincian 2023 masih menyebut sagu dan stok. Laporan resmi 2024 juga menyebut bantuan pangan CPP. Perubahan rincian ini menjadi alasan segmentasi konservatif. Audit tersebut **tidak mengukur dampak numerik perubahan definisi** dan tidak membuktikan bahwa setiap lonjakan skor berasal dari perubahan metode. Identitas normalisasi, implementasi pada setiap daerah, dan backcasting seri belum terverifikasi penuh.
 
@@ -58,7 +58,7 @@ Skor 2024 versi 12 indikator yang juga tersedia di folder sumber merupakan vinta
 
 ### 2.2. Pencocokan dan selisih sumber
 
-Input asal cocok **85/90** dengan sumber provinsi. Kelima selisih memiliki keputusan dan tingkat bukti dalam [catatan rekonsiliasi](review/timeseries/rekonsiliasi_nilai.csv). Tanggamus 2020 dikoreksi pada salinan analisis menjadi 74,67 sesuai Lampiran 1 dan tabel peringkat [publikasi primer IKP 2020](https://badanpangan.go.id/storage/app/media/2021/ikp-2020-20210120fix.pdf). Empat nilai lainnya dipertahankan karena didukung publikasi primer atau dokumen pemerintah daerah; dua keputusan berbukti cuplikan terindeks tetap memiliki keterbatasan akses. Sesudah rekonsiliasi, **86/90** nilai analisis cocok dengan provinsi; empat selisih tersisa bukan koreksi yang tertunda secara otomatis.
+Input asal cocok **85/90** dengan sumber provinsi. Kelima selisih memiliki keputusan dan tingkat bukti dalam [catatan rekonsiliasi](review/timeseries/rekonsiliasi_nilai.csv). Tanggamus 2020 dikoreksi pada salinan analisis menjadi 74,67 sesuai Lampiran 1 dan tabel peringkat [publikasi primer IKP 2020](https://badanpangan.go.id/storage/app/media/2021/ikp-2020-20210120fix.pdf). Empat keputusan didukung halaman publikasi primer; Metro 2019 memiliki cuplikan primer terindeks dan dokumen daerah dengan batas akses. Lampung Selatan 2024 tetap 84,46 sesuai Tabel 4.1 publikasi primer 2024 (PDF halaman 60). Sesudah rekonsiliasi, **86/90** nilai analisis cocok dengan provinsi; empat selisih tersisa bukan koreksi yang tertunda secara otomatis.
 
 | Wilayah | Tahun | Nilai asal | Provinsi | Nilai analisis | Keputusan | Bukti |
 | --- | --- | ---: | ---: | ---: | --- | --- |
@@ -66,7 +66,7 @@ Input asal cocok **85/90** dengan sumber provinsi. Kelima selisih memiliki keput
 | Tanggamus | 2020 | 76,67 | 74,67 | 74,67 | koreksi | primer_pdf |
 | Kota Metro | 2019 | 75,85 | 78,00 | 75,85 | pertahankan | dokumen_daerah_dan_indeks_primer |
 | Kota Metro | 2020 | 76,76 | 76,75 | 76,76 | pertahankan | primer_pdf |
-| Lampung Selatan | 2024 | 84,46 | 84,64 | 84,46 | pertahankan | dokumen_daerah_terindeks |
+| Lampung Selatan | 2024 | 84,46 | 84,64 | 84,46 | pertahankan | primer_pdf |
 
 Selisih sesudah rekonsiliasi:
 
@@ -248,8 +248,8 @@ Evaluasi diulang dengan mengeluarkan satu tahun target secara bergantian. Setiap
 
 1. Panjang seri hanya tujuh tahun; segmentasi memperpendeknya lagi. Analisis tidak mengidentifikasi pola musiman bulanan atau siklus jangka panjang.
 2. Perubahan dokumen komponen tidak memberi ukuran dampak pada skor. Batas konservatif mencegah perbandingan lintas-definisi, tetapi tidak menggantikan seri yang telah diharmonisasi.
-3. Metodologi 2019 dan rincian lengkap 2024 belum selesai diverifikasi. Sumber input dan normalisasi yang berganti dapat memengaruhi skor, termasuk seri kota.
-4. Lima perbedaan sumber sudah memiliki keputusan terdokumentasi; satu koreksi memakai publikasi primer. Keputusan Metro 2019 dan Lampung Selatan 2024 masih memakai cuplikan terindeks/dokumen daerah sehingga kekuatan bukti dibedakan. Uji sensitivitas menunjukkan kesimpulan fluktuasi bergantung pada nilai sumber.
+3. Audit penuh 2019 dan parameter standardisasi yang identik antar-edisi belum selesai diverifikasi. Halaman teknis primer 2024 mendukung definisi, bobot, tahun input 2023 dan rumus umum, tetapi tidak membuktikan harmonisasi seluruh seri. Sumber input/instrumen survei berganti, termasuk stunting dari SKI 2023, sehingga seri kota juga tetap bersyarat.
+4. Lima perbedaan sumber memiliki keputusan terdokumentasi; satu koreksi memakai publikasi primer. Empat keputusan didukung halaman primer; Metro 2019 memiliki batas akses PDF penuh. Uji sensitivitas menunjukkan kesimpulan fluktuasi bergantung pada nilai sumber.
 5. Evaluasi ramalan hanya menghasilkan tiga target per kota. Keenam error gabungan per metode tidak dianggap sebagai enam tahun observasi independen.
 6. Perubahan skor tidak membuktikan pengaruh kebijakan, COVID, atau faktor sosial-ekonomi tertentu. Hasil tidak digunakan sebagai peringkat prioritas intervensi.
 

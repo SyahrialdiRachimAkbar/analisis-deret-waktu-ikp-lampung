@@ -20,8 +20,9 @@ Format: tanggal — item — apa yang berubah — kenapa — dampak ke kesimpula
 - Uji sensitivitas sumber dan pengeluaran satu target diperluas. Tanpa target 2022,
   drift unggul pada MAE; urutan metode tidak dinyatakan berlaku umum.
 - Metodologi 2018 diperiksa ulang dengan pdfminer.six yang sudah tersedia. Cuplikan
-  primer 2019 memberi bukti parsial; akses penuh 2019 dan publikasi teknis 2024
-  belum berhasil. Parameter normalisasi identik/harmonisasi tetap tidak diklaim.
+  primer 2019 memberi bukti parsial; akses penuh 2019 belum berhasil. Halaman teknis
+  primer 2024 diperiksa dengan HTTP Range: input, bobot, rumus umum dan skor Lampung
+  Selatan 84,46. Parameter normalisasi identik/harmonisasi tetap tidak diklaim.
 - Versi 16 dependensi runtime dikunci melalui renv.lock dan manifest; penyiapan
   eksplisit memakai renv di .library/. Tidak ada dependensi baru dipasang pada sesi
   analisis lokal. CI Windows/Linux, kamus data, dan petunjuk reproduksi ditambahkan.

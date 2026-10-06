@@ -23,6 +23,11 @@ Rata-rata kabupaten memberi bobot sama pada 13 wilayah; bukan IKP resmi provinsi
 Nilai kosong pada perubahan/ramalan berarti tidak dihitung, dengan alasan di kolom
 status. Nilai kosong tidak diganti nol.
 
+Bobot audit memakai urutan kanonis: ketersediaan; kemiskinan; pangsa pengeluaran;
+listrik; sekolah perempuan; air bersih; tenaga kesehatan; stunting; harapan hidup.
+Dokumen 2024 memakai urutan berbeda pada pemanfaatan. Pencocokan mengikuti nama
+indikator. Ketersediaan kota berbobot nol; delapan indikator lain dipakai.
+
 `rekonsiliasi_nilai.csv` menyimpan lima keputusan, nilai asal/pembanding/analisis,
 URL, lokasi bukti, dan keterbatasan akses. `sensitivitas_nilai.csv` membandingkan
 input asal, rekonsiliasi, dan pembanding provinsi tanpa mengubah input. Skenario

@@ -14,15 +14,23 @@
 - Dua salinan baru di direktori temporer memakai seluruh teks LF atau CRLF,
   tanpa hasil deret waktu lama. Keduanya menjalankan pipeline lengkap exit 0 dan
   menghasilkan masing-masing enam PNG dan enam PDF.
+- Clone Git lokal yang benar-benar baru dengan core.autocrlf=true juga menjalankan
+  pipeline penuh exit 0, termasuk pemeriksaan hash input dan regenerasi grafik.
 - JSON renv.lock cocok dengan seluruh package/version pada manifest CSV.
 - Seluruh berkas input/sumber/arsip yang dilindungi identik sebelum/sesudah run.
 - Grafik fluktuasi dan kesenjangan sesudah koreksi diperiksa secara visual.
+- GitHub Actions untuk commit dc49b6e selesai sukses pada Linux dan Windows,
+  termasuk restore renv, pipeline penuh, dan unggah artefak:
+  [run 37421523401](https://github.com/SyahrialdiRachimAkbar/analisis-deret-waktu-ikp-lampung/actions/runs/37421523401).
+- Halaman primer 2024 diperiksa dari objek PDF yang diunduh melalui HTTP Range:
+  definisi/input pada hlm 36–37; rumus/bobot pada hlm 39–40; nama/skor pada hlm 60/65
+  dicocokkan berdasarkan posisi baris tabel. Lampung Selatan 84,46 terkonfirmasi.
 
 ## Batas pemeriksaan
 
-Uji LF/CRLF memakai paket yang sudah tersedia di komputer ini. Restore paket pada
-mesin baru dan pengujian Linux dilakukan oleh workflow GitHub Actions setelah
-push; status aktual harus diperiksa di Actions, bukan disimpulkan dari uji lokal.
+Uji LF/CRLF lokal memakai paket yang sudah tersedia di komputer ini. Restore paket
+pada mesin baru telah lulus dalam run CI yang ditautkan di atas. Revisi sesudah
+commit tersebut tetap memerlukan run CI sendiri; status tidak disimpulkan dari uji lokal.
 Dokumen ini tidak menyatakan harmonisasi seri atau audit metadata tahunan telah
 lengkap. Panjang seri tujuh tahun merupakan batas data yang tidak dihapus oleh tes.
 

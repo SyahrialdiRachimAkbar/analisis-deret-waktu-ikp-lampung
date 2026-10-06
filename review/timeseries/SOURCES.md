@@ -9,8 +9,8 @@ di `R/timeseries/methodology.R`. Matriks yang diekspor berada di
 
 | Edisi | Sumber primer dan lokasi | Temuan ringkas |
 | --- | --- | --- |
-| 2018 | PDF lokal `review/sources/BKP_Indeks_Ketahanan_Pangan_2018.pdf`; audit tersimpan `review/verify_output.log` bagian 8 | Audit sebelumnya mencatat 15/15 skor dan peringkat cocok. Isi PDF lokal tidak berhasil diekstraksi ulang pada sesi ini; statusnya audit tersimpan. |
-| 2019 | [Publikasi IKP 2019](https://badanpangan.go.id/storage/app/media/Bahan%202020/IKP%202019%20FINAL.pdf) | URL ditemukan tetapi isi gagal diakses. Rincian indikator, bobot, dan normalisasi belum diverifikasi. |
+| 2018 | PDF lokal `review/sources/BKP_Indeks_Ketahanan_Pangan_2018.pdf`, PDF hlm 7–10; audit skor tersimpan `review/verify_output.log` bagian 8 | Metodologi berhasil diekstraksi ulang dengan pdfminer.six: komoditas, produksi tetap 2014–2016, Susenas 2017, bobot 9/8 dan standardisasi. Audit skor sebelumnya mencatat 15/15 cocok. |
+| 2019 | [Publikasi IKP 2019](https://badanpangan.go.id/storage/app/media/Bahan%202020/IKP%202019%20FINAL.pdf) | Cuplikan primer terindeks mendukung 9/8 indikator, rumus z-score/distance to scale dan Metro 75,85. Akses PDF penuh gagal; rincian bobot dan input belum diperiksa lengkap. |
 | 2020 | [IKP 2020](https://badanpangan.go.id/storage/app/media/2021/ikp-2020-20210120fix.pdf), PDF halaman 7–10, terutama Tabel 1–2 | Empat komoditas pada ketersediaan; input produksi dan Susenas 2019; 9 indikator kabupaten, 8 kota. |
 | 2021 | [IKP 2021](https://repository.pertanian.go.id/server/api/core/bitstreams/0700d4be-634a-4f89-820c-dbd06fe686b5/content), PDF halaman 10 dan 13–14 | Komponen ketersediaan juga mencakup stok beras daerah; input produksi 2020. |
 | 2022 | [IKP 2022](https://badanpangan.go.id/storage/app/media/2023/Buku%20Digital/Buku%20Indeks%20Ketahanan%20Pangan%202022%20Signed.pdf), PDF halaman 12 dan 15–16 | Sagu juga tercantum pada komponen ketersediaan; input produksi 2021. |
@@ -46,6 +46,36 @@ Berkas Satu Data Lampung yang sudah tersimpan dibandingkan lewat nama wilayah,
 bukan kode. Hasilnya 85/90 cocok; lima perbedaan disimpan di
 [selisih_sumber_provinsi.csv](../../output/timeseries/selisih_sumber_provinsi.csv).
 Data proyek tetap dipakai, tanpa koreksi otomatis dari sumber pembanding.
+
+### Revisi sesudah evaluasi
+
+Kalimat di atas menggambarkan pemeriksaan awal. Analisis aktif sekarang memakai
+[rekonsiliasi_nilai.csv](rekonsiliasi_nilai.csv): lima keputusan dengan tingkat bukti.
+Tanggamus 2020 diubah **pada salinan analisis** dari 76,67 menjadi 74,67 karena
+publikasi IKP 2020 mencatat 74,67 pada dua tempat: tabel peringkat (PDF hlm 15)
+dan Lampiran 1 (PDF hlm 29). Lampung Barat 2020 tetap 74,02 pada Lampiran 1;
+Metro 2020 tetap 76,76 pada Lampiran 2 (PDF hlm 43).
+
+Metro 2019 sebesar 75,85 didukung cuplikan primer terindeks dan
+[RPJPD Kota Metro 2025–2045](https://bappeda.metrokota.go.id/wp-content/uploads/2025/11/RPJPD_KOTA-METRO_2025-2045.pdf),
+Tabel 2.7, halaman cetak II-11. Lampung Selatan 2024 sebesar 84,46 didukung
+[dokumen pemerintah Provinsi Lampung](https://bappeda.lampungprov.go.id/index.php/berkas/uploads/n5PoPB1JTmtfmMl4t2cJMk8QnWaKthusWh9kfrxI.pdf),
+tabel IKP kabupaten/kota 2024. Kedua PDF terakhir hanya terbaca melalui cuplikan
+terindeks; status ini dibedakan dari publikasi primer PDF yang diperiksa penuh.
+Input asal tetap 85/90 cocok; nilai analisis sesudah satu koreksi 86/90 cocok.
+
+Publikasi teknis [FSVA Nasional 2024](https://data.badanpangan.go.id/statisticpublications/pke)
+ditemukan dengan [tautan unduh resmi](https://data.badanpangan.go.id/download/document/publication/76/1738309499.pdf/pdf).
+Pembaca web menolak ukuran sekitar 31 MB. Usaha akses lokal juga dicatat sebagai
+usaha akses, bukan bukti bahwa bobot/normalisasi 2024 sudah diverifikasi.
+Katalog perpustakaan resmi memiliki tombol baca yang mengarah ke login.
+Matriks menambahkan kolom normalisasi umum serta konfirmasi parameter identik
+dan harmonisasi; keduanya tetap FALSE karena belum ada bukti lengkap.
+
+Sensitivitas memakai tiga skenario nilai dan pengeluaran satu tahun target.
+Pengeluaran target 2022 mengubah metode dengan MAE lebih kecil menjadi drift.
+Ukuran sampel tujuh tahun tidak ditambah secara artifisial; SD dua perubahan dan
+ramalan tiga target tetap dilaporkan sebagai deskripsi dengan keterbatasan.
 
 Seri [IKP kabupaten/kota edisi lama](https://data.badanpangan.go.id/datasetpublications/frq/ikp-kab-kota-2024)
 dan [seri 12 indikator](https://data.badanpangan.go.id/datasetpublications/cky/ikp-kabupaten-kota-2024-2026)

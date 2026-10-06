@@ -5,6 +5,30 @@ Format: tanggal — item — apa yang berubah — kenapa — dampak ke kesimpula
 
 ---
 
+## 2026-10-06 — Revisi hasil evaluasi: reproduksi dan rekonsiliasi
+
+- Integritas input memakai SHA256 teks LF untuk menghindari kegagalan clone akibat
+  CRLF/LF. Hash byte lokal tetap dicatat; perubahan angka tetap ditolak. Ditambahkan
+  .gitattributes dan pemeriksaan regresi akhir baris.
+- Tahun wajib numerik bulat dan finite sebelum konversi. Catatan status backtest
+  mengikuti parameter minimal latihan, tanpa angka 4 yang tertanam dalam status.
+- Lima selisih sumber direkonsiliasi dengan URL/lokasi/tingkat bukti. Tanggamus 2020
+  dikoreksi dari 76,67 menjadi 74,67 hanya pada salinan analisis. Nilai asal tetap
+  tersedia dan sumber/arsip tidak ditulis ulang. Kecocokan provinsi 85/90 → 86/90.
+- Rata-rata kabupaten 2020 78,08 → 77,926154; SD 4,161991 → 4,254393. Tanggamus
+  memiliki SD perubahan 4,574981 dan satu tahun turun sesudah koreksi.
+- Uji sensitivitas sumber dan pengeluaran satu target diperluas. Tanpa target 2022,
+  drift unggul pada MAE; urutan metode tidak dinyatakan berlaku umum.
+- Metodologi 2018 diperiksa ulang dengan pdfminer.six yang sudah tersedia. Cuplikan
+  primer 2019 memberi bukti parsial; akses penuh 2019 dan publikasi teknis 2024
+  belum berhasil. Parameter normalisasi identik/harmonisasi tetap tidak diklaim.
+- Versi 16 dependensi runtime dikunci melalui renv.lock dan manifest; penyiapan
+  eksplisit memakai renv di .library/. Tidak ada dependensi baru dipasang pada sesi
+  analisis lokal. CI Windows/Linux, kamus data, dan petunjuk reproduksi ditambahkan.
+- Laporan, grafik, tabel, dan jejak pemeriksaan dibuat ulang dari analisis revisi.
+
+---
+
 ## 2026-10-06 — Project aktif dialihkan ke analisis deret waktu IKP
 
 **Arahan penulis:** tetap memakai dataset saat ini dengan tema Analisis Deret Waktu.

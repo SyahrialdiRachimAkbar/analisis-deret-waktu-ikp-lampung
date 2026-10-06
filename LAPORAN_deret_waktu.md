@@ -8,9 +8,9 @@ Laporan Project Sains Data. Dokumen ini dihasilkan oleh pipeline R dari data yan
 
 ## Ringkasan
 
-Data mencakup 105 observasi: 13 kabupaten dan 2 kota, masing-masing tujuh tahun. Kolom IKP dan identitas wilayah cocok 105/105 antara data mentah dan CSV bersih. Dari 90 kandidat perubahan tahunan, 51 dihitung di dalam segmen dan 39 dikecualikan pada batas definisi komponen.
+Data mencakup 105 observasi: 13 kabupaten dan 2 kota, masing-masing tujuh tahun. Data mentah dan CSV bersih asal cocok 105/105. Analisis memakai salinan dengan satu koreksi berbukti primer: Tanggamus 2020, 76,67 menjadi 74,67. Nilai asal tetap tersimpan. Dari 90 kandidat perubahan tahunan, 51 dihitung di dalam segmen dan 39 dikecualikan pada batas definisi komponen.
 
-Dalam segmen kabupaten 2018–2020, rata-rata sederhana skor meningkat dari 75,13 ke 78,08; simpangan baku antarwilayah berubah dari 3,97 ke 4,16. Dalam segmen 2022–2023, rata-rata berubah dari 79,41 ke 81,25 dan simpangan baku dari 4,74 ke 5,03. Angka ini mendeskripsikan skor pada segmen masing-masing; tidak membuktikan perubahan kausal atau keterbandingan penuh antar-edisi.
+Dalam segmen kabupaten 2018–2020, rata-rata sederhana skor meningkat dari 75,13 ke 77,93; simpangan baku antarwilayah berubah dari 3,97 ke 4,25. Dalam segmen 2022–2023, rata-rata berubah dari 79,41 ke 81,25 dan simpangan baku dari 4,74 ke 5,03. Angka ini mendeskripsikan skor pada segmen masing-masing; tidak membuktikan perubahan kausal atau keterbandingan penuh antar-edisi.
 
 Evaluasi naïve dan drift menghasilkan 12 ramalan uji untuk dua kota; 78 kandidat kabupaten tidak diestimasi karena segmen latihan kurang dari empat tahun. Metode dengan MAE lebih kecil pada gabungan enam pengamatan uji kota adalah **naive**. Temuan ini terbatas pada dua kota dan tiga tahun target, bukan kesimpulan umum untuk Lampung.
 
@@ -37,8 +37,8 @@ Matriks di bawah merangkum fakta dokumen primer yang berhasil diperiksa dan bagi
 
 | Edisi | Dokumen | Rincian ketersediaan kabupaten | Batas sebelum edisi | Status bukti |
 | --- | --- | --- | --- | --- |
-| 2018 | [IKP Indonesia 2018 (PDF lokal dan audit sumber tersimpan)](https://repository.pertanian.go.id/browse/title?scope=6db25a25-f282-4a1b-8271-4cc09bc4d9cb) | Padi, jagung, ubi kayu, ubi jalar | FALSE | audit_tersimpan |
-| 2019 | [IKP Indonesia 2019 (URL ditemukan; isi tidak berhasil diakses)](https://badanpangan.go.id/storage/app/media/Bahan%202020/IKP%202019%20FINAL.pdf) | Belum terverifikasi | FALSE | belum_terverifikasi |
+| 2018 | [IKP Indonesia 2018 (PDF lokal dan audit sumber tersimpan)](https://repository.pertanian.go.id/browse/title?scope=6db25a25-f282-4a1b-8271-4cc09bc4d9cb) | Padi, jagung, ubi kayu, ubi jalar | FALSE | metodologi_primer_dan_audit_skor_tersimpan |
+| 2019 | [IKP Indonesia 2019 (cuplikan primer terindeks; akses PDF penuh belum berhasil)](https://badanpangan.go.id/storage/app/media/Bahan%202020/IKP%202019%20FINAL.pdf) | Belum terverifikasi | FALSE | cuplikan_primer_terindeks |
 | 2020 | [IKP 2020](https://badanpangan.go.id/storage/app/media/2021/ikp-2020-20210120fix.pdf) | Padi, jagung, ubi kayu, ubi jalar | FALSE | terverifikasi_parsial |
 | 2021 | [IKP 2021](https://repository.pertanian.go.id/server/api/core/bitstreams/0700d4be-634a-4f89-820c-dbd06fe686b5/content) | Padi, jagung, ubi kayu, ubi jalar, stok beras daerah | TRUE | terverifikasi_parsial |
 | 2022 | [IKP 2022](https://badanpangan.go.id/storage/app/media/2023/Buku%20Digital/Buku%20Indeks%20Ketahanan%20Pangan%202022%20Signed.pdf) | Padi, jagung, ubi kayu, ubi jalar, sagu, stok beras daerah | TRUE | terverifikasi_parsial |
@@ -58,17 +58,36 @@ Skor 2024 versi 12 indikator yang juga tersedia di folder sumber merupakan vinta
 
 ### 2.2. Pencocokan dan selisih sumber
 
-Pencocokan ke berkas Satu Data Lampung yang telah tersimpan menghasilkan **85/90 cocok**, dengan lima selisih berikut. Data proyek dipertahankan; sumber pembanding tidak otomatis menggantikannya.
+Input asal cocok **85/90** dengan sumber provinsi. Kelima selisih memiliki keputusan dan tingkat bukti dalam [catatan rekonsiliasi](review/timeseries/rekonsiliasi_nilai.csv). Tanggamus 2020 dikoreksi pada salinan analisis menjadi 74,67 sesuai Lampiran 1 dan tabel peringkat [publikasi primer IKP 2020](https://badanpangan.go.id/storage/app/media/2021/ikp-2020-20210120fix.pdf). Empat nilai lainnya dipertahankan karena didukung publikasi primer atau dokumen pemerintah daerah; dua keputusan berbukti cuplikan terindeks tetap memiliki keterbatasan akses. Sesudah rekonsiliasi, **86/90** nilai analisis cocok dengan provinsi; empat selisih tersisa bukan koreksi yang tertunda secara otomatis.
+
+| Wilayah | Tahun | Nilai asal | Provinsi | Nilai analisis | Keputusan | Bukti |
+| --- | --- | ---: | ---: | ---: | --- | --- |
+| Lampung Barat | 2020 | 74,02 | 70,80 | 74,02 | pertahankan | primer_pdf |
+| Tanggamus | 2020 | 76,67 | 74,67 | 74,67 | koreksi | primer_pdf |
+| Kota Metro | 2019 | 75,85 | 78,00 | 75,85 | pertahankan | dokumen_daerah_dan_indeks_primer |
+| Kota Metro | 2020 | 76,76 | 76,75 | 76,76 | pertahankan | primer_pdf |
+| Lampung Selatan | 2024 | 84,46 | 84,64 | 84,46 | pertahankan | dokumen_daerah_terindeks |
+
+Selisih sesudah rekonsiliasi:
 
 | Wilayah | Tahun | IKP proyek | IKP sumber provinsi | Selisih (poin) |
 | --- | --- | ---: | ---: | ---: |
 | Lampung Barat | 2020 | 74,02 | 70,80 | 3,22 |
-| Tanggamus | 2020 | 76,67 | 74,67 | 2,00 |
 | Lampung Selatan | 2024 | 84,46 | 84,64 | -0,18 |
 | Kota Metro | 2019 | 75,85 | 78,00 | -2,15 |
 | Kota Metro | 2020 | 76,76 | 76,75 | 0,01 |
 
-Untuk IKP 2018, audit tersimpan mencatat 15/15 cocok dengan publikasi primer, termasuk peringkat. Itu bukti audit sebelumnya; isi PDF lokal tidak diekstraksi ulang pada pipeline ini. Pencocokan provinsi dilakukan lewat nama wilayah dengan menghapus awalan `Kota`, bukan lewat ID internal. Metadata geometri dan kode pada sumber lain tidak dipakai sebagai acuan otomatis.
+Untuk IKP 2018, audit skor tersimpan mencatat 15/15 cocok dengan publikasi primer, termasuk peringkat. Metodologi PDF lokal berhasil diperiksa ulang: produksi tetap 2014–2016, Susenas 2017, bobot 9/8 indikator, dan rumus umum standardisasi. Pemeriksaan ini tidak membuktikan parameter normalisasi identik lintas-edisi. Pencocokan provinsi dilakukan lewat nama wilayah dengan menghapus awalan `Kota`, bukan lewat ID internal.
+
+### 2.3. Sensitivitas terhadap pilihan nilai
+
+Tiga skenario dihitung tanpa mengubah input: nilai asal; nilai rekonsiliasi (analisis utama); dan semua nilai pembanding provinsi sebagai uji sensitivitas. Skenario provinsi bukan rekomendasi penggantian data: publikasi primer justru mendukung beberapa nilai asal. Perubahan urutan wilayah berikut menunjukkan ketergantungan ukuran fluktuasi pada pilihan sumber.
+
+| Skenario | Rata-rata kabupaten 2020 | SD kabupaten 2020 | Wilayah SD perubahan tertinggi 2018–2020 | SD perubahan tertinggi | MAE naïve kota | MAE drift kota |
+| --- | ---: | ---: | --- | ---: | ---: | ---: |
+| asli | 78,08 | 4,16 | Tanggamus | 3,16 | 4,64 | 4,97 |
+| rekonsiliasi | 77,93 | 4,25 | Tanggamus | 4,57 | 4,64 | 4,97 |
+| pembanding_provinsi | 77,68 | 4,58 | Lampung Barat | 5,43 | 4,64 | 4,97 |
 
 ## 3. Metode analisis deret waktu
 
@@ -100,7 +119,7 @@ Tidak ada pemilihan model kompleks, penyetelan berdasarkan tahun target, pemoton
 | --- | ---: | ---: | ---: | ---: | ---: | --- |
 | 2018 | 75,13 | 3,97 | 67,99 | 80,82 | 12,83 | Kabupaten_1 |
 | 2019 | 77,33 | 3,92 | 71,35 | 83,13 | 11,78 | Kabupaten_1 |
-| 2020 | 78,08 | 4,16 | 71,51 | 83,79 | 12,28 | Kabupaten_1 |
+| 2020 | 77,93 | 4,25 | 71,51 | 83,79 | 12,28 | Kabupaten_1 |
 | 2021 | 78,35 | 4,91 | 70,80 | 85,60 | 14,80 | Kabupaten_2 |
 | 2022 | 79,41 | 4,74 | 71,71 | 86,25 | 14,54 | Kabupaten_3 |
 | 2023 | 81,25 | 5,03 | 74,19 | 87,51 | 13,32 | Kabupaten_3 |
@@ -112,12 +131,12 @@ Angka antar-edisi ditampilkan sebagai potret skor yang tercatat. Perubahan linta
 
 ### 4.2. Tren per wilayah dan segmen
 
-**Kabupaten 2018–2020.** Setiap wilayah memiliki tiga skor dan dua perubahan. Interpretasi tetap bersyarat karena metodologi 2019 belum sepenuhnya diperiksa.
+**Kabupaten 2018–2020.** Setiap wilayah memiliki tiga skor dan dua perubahan. Ini ukuran deskriptif dengan informasi sangat terbatas; tidak dipakai untuk klasifikasi stabil/tidak stabil. Cuplikan primer 2019 mendukung jumlah indikator dan rumus umum, tetapi audit penuh keterbandingan input belum selesai.
 
 | Wilayah | IKP awal | IKP akhir | Kenaikan (poin) | Rata-rata perubahan | SD perubahan | Tahun turun |
 | --- | ---: | ---: | ---: | ---: | ---: | --- |
 | Lampung Barat | 70,76 | 74,02 | 3,26 | 1,63 | 3,15 | 1 |
-| Tanggamus | 71,96 | 76,67 | 4,71 | 2,36 | 3,16 | 0 |
+| Tanggamus | 71,96 | 74,67 | 2,71 | 1,36 | 4,57 | 1 |
 | Lampung Selatan | 76,48 | 79,23 | 2,75 | 1,38 | 1,61 | 0 |
 | Lampung Timur | 77,43 | 79,50 | 2,07 | 1,03 | 1,53 | 1 |
 | Lampung Tengah | 75,43 | 79,83 | 4,40 | 2,20 | 1,77 | 0 |
@@ -161,7 +180,7 @@ Angka antar-edisi ditampilkan sebagai potret skor yang tercatat. Perubahan linta
 
 ### 4.3. Stabilitas perubahan skor
 
-Pada segmen kabupaten 2018–2020, SD perubahan terendah tercatat pada **Tulang Bawang Barat (0,20 poin)** dan tertinggi pada **Tanggamus (3,16 poin)**. Ukuran tersebut berasal dari hanya dua perubahan per wilayah sehingga dipakai sebagai deskripsi, bukan klasifikasi risiko atau bukti pola jangka panjang.
+Pada segmen kabupaten 2018–2020, SD perubahan terendah tercatat pada **Tulang Bawang Barat (0,20 poin)** dan tertinggi pada **Tanggamus (4,57 poin)**. Ukuran tersebut berasal dari hanya dua perubahan per wilayah sehingga dipakai sebagai deskripsi, bukan klasifikasi risiko atau bukti pola jangka panjang.
 
 Kenaikan bersih dan fluktuasi dibaca bersama: kenaikan yang konsisten berbeda dari stagnasi, walaupun keduanya dapat memiliki SD rendah. Kabupaten dan kota tidak digabung dalam pemeringkatan stabilitas karena jumlah perubahan dan konstruksi indeks berbeda.
 
@@ -169,7 +188,7 @@ Kenaikan bersih dan fluktuasi dibaca bersama: kenaikan yang konsisten berbeda da
 
 ### 4.4. Apakah kesenjangan menyempit?
 
-Di dalam segmen 2018–2020, SD antarkabupaten berubah dari 3,97 ke 4,16, selisih **0,19 poin**. Di dalam segmen 2022–2023, SD berubah dari 4,74 ke 5,03, selisih **0,29 poin**. Pada kedua perbandingan ujung segmen ini, sebaran skor tidak menyempit; ini deskripsi data, bukan uji perbedaan populasi.
+Di dalam segmen 2018–2020, SD antarkabupaten berubah dari 3,97 ke 4,25, selisih **0,28 poin**. Di dalam segmen 2022–2023, SD berubah dari 4,74 ke 5,03, selisih **0,29 poin**. Pada kedua perbandingan ujung segmen ini, sebaran skor tidak menyempit; ini deskripsi data, bukan uji perbedaan populasi.
 
 Pertanyaan apakah kesenjangan sepanjang 2018–2024 menyempit **belum dapat dijawab secara sebanding** dari seri ini tanpa harmonisasi komponen. Karena itu, laporan tidak mengurangkan potret 2018 langsung dari potret 2024 untuk menyatakan perubahan kesenjangan seluruh periode.
 
@@ -204,6 +223,23 @@ Hasil per tahun target, masing-masing dari dua kota:
 
 Metode **naive** memiliki MAE gabungan kota yang lebih rendah pada pengujian ini. Besarnya error per tahun harus ikut dibaca karena lonjakan skor dapat mendominasi ringkasan. Tiga target tidak cukup untuk menyatakan metode terbaik secara umum, apalagi untuk kabupaten yang tidak diestimasi.
 
+Menurut RMSE gabungan, metode dengan nilai lebih rendah adalah **drift**. Pemilihan ukuran error mengubah urutan metode; laporan tidak menetapkan pemenang universal.
+
+### 4.6. Sensitivitas terhadap tahun target
+
+Evaluasi diulang dengan mengeluarkan satu tahun target secara bergantian. Setiap skenario pengurangan tahun hanya memiliki empat ramalan per metode dari dua tahun target. Ini pemeriksaan deskriptif ketahanan hasil; bukan uji signifikansi atau penyetelan model. Kesimpulan pilihan metode harus mempertimbangkan perubahan urutan MAE/RMSE dan tidak menganggap enam error sebagai enam tahun independen.
+
+| Skenario | Metode | Ramalan uji | Tahun uji | MAE | RMSE |
+| --- | --- | --- | --- | ---: | ---: |
+| semua_target | drift | 6 | 3 | 4,97 | 5,91 |
+| semua_target | naive | 6 | 3 | 4,64 | 6,11 |
+| tanpa_target_2022 | drift | 4 | 2 | 5,09 | 6,21 |
+| tanpa_target_2022 | naive | 4 | 2 | 5,92 | 7,27 |
+| tanpa_target_2023 | drift | 4 | 2 | 3,13 | 3,86 |
+| tanpa_target_2023 | naive | 4 | 2 | 1,89 | 2,13 |
+| tanpa_target_2024 | drift | 4 | 2 | 6,70 | 7,16 |
+| tanpa_target_2024 | naive | 4 | 2 | 6,11 | 7,38 |
+
 ![Error ramalan](output/timeseries/05_error_peramalan.png)
 
 ![Aktual dan ramalan historis kota](output/timeseries/06_aktual_dan_ramalan_kota.png)
@@ -213,7 +249,7 @@ Metode **naive** memiliki MAE gabungan kota yang lebih rendah pada pengujian ini
 1. Panjang seri hanya tujuh tahun; segmentasi memperpendeknya lagi. Analisis tidak mengidentifikasi pola musiman bulanan atau siklus jangka panjang.
 2. Perubahan dokumen komponen tidak memberi ukuran dampak pada skor. Batas konservatif mencegah perbandingan lintas-definisi, tetapi tidak menggantikan seri yang telah diharmonisasi.
 3. Metodologi 2019 dan rincian lengkap 2024 belum selesai diverifikasi. Sumber input dan normalisasi yang berganti dapat memengaruhi skor, termasuk seri kota.
-4. Lima perbedaan dengan sumber provinsi belum direkonsiliasi. Data dipertahankan dan selisihnya diungkapkan.
+4. Lima perbedaan sumber sudah memiliki keputusan terdokumentasi; satu koreksi memakai publikasi primer. Keputusan Metro 2019 dan Lampung Selatan 2024 masih memakai cuplikan terindeks/dokumen daerah sehingga kekuatan bukti dibedakan. Uji sensitivitas menunjukkan kesimpulan fluktuasi bergantung pada nilai sumber.
 5. Evaluasi ramalan hanya menghasilkan tiga target per kota. Keenam error gabungan per metode tidak dianggap sebagai enam tahun observasi independen.
 6. Perubahan skor tidak membuktikan pengaruh kebijakan, COVID, atau faktor sosial-ekonomi tertentu. Hasil tidak digunakan sebagai peringkat prioritas intervensi.
 
@@ -229,10 +265,13 @@ Jalankan dari root project di PowerShell:
 
 Pipeline memakai base R dan ggplot2 yang telah terpasang. Tidak memerlukan jaringan atau pemasangan package. Pipeline menjalankan pemeriksaan rumus, kebocoran waktu, batas metodologi, data invalid, integritas input, serta kelengkapan ekspor sebelum menyatakan selesai.
 
+Penyiapan komputer baru dijelaskan di [README](README.md): R 4.5.2, versi paket dikunci dalam renv.lock, dan restore eksplisit ke .library/. Versi paket diperiksa terhadap manifest sebelum analisis. Workflow GitHub Actions menguji clone bersih pada Windows dan Linux; status eksekusi CI dilihat di tab Actions repo, tidak diasumsikan lulus hanya karena workflow tersedia.
+
 Berkas di `output/timeseries/`:
 
 - `data_analisis.csv`: 105 skor, jenis wilayah, segmen, dan status analisis.
 - `audit_metodologi.csv`: bukti per edisi dan jenis wilayah; `audit_sumber_provinsi.csv` serta `selisih_sumber_provinsi.csv`: audit nilai sumber.
+- `audit_sumber_provinsi_asal.csv` dan `rekonsiliasi_nilai.csv`: perbandingan sebelum koreksi dan seluruh keputusan sumber; `sensitivitas_nilai.csv` serta `sensitivitas_tahun_uji.csv`: ketahanan hasil.
 - `perubahan_tahunan.csv`: seluruh kandidat perubahan termasuk nilai yang dikecualikan; `ringkasan_wilayah_per_segmen.csv`: ukuran tren dan fluktuasi.
 - `kesenjangan_kabupaten.csv`: potret tahunan serta perubahan yang memenuhi batas.
 - `backtest_detail.csv`: seluruh kandidat ramalan, jendela latihan, aktual, error, dan status.
@@ -240,16 +279,15 @@ Berkas di `output/timeseries/`:
 - Enam grafik dalam format PNG 300 dpi dan PDF.
 - `hash_input_sha256.csv`, `integritas_arsip.csv`, `versi_kode.csv`, `session_info.txt`, dan `run.log`: bukti reproduksi dan integritas.
 
-Hash SHA256 input:
+Hash SHA256 input: kolom byte menunjukkan berkas lokal; kolom teks LF menjadi acuan integritas yang hanya menormalkan CRLF ke LF. Perubahan angka/isi lain tetap ditolak. .gitattributes menetapkan CSV sebagai teks LF agar clone memiliki format konsisten.
 
-| Input | SHA256 |
-| --- | --- |
-| Data Fix - DATA.csv | ad69f257005795e69fe56006f32e913e8231777a6cb66bcb40782cdd7eea0eb5 |
-| data/lampung_panel_clean.csv | becc5801facc6ee6f04a5d1906646a71eaa9e0c45c3cb45c22e6febb506a8431 |
+| Input | SHA256 byte lokal | SHA256 teks LF |
+| --- | --- | --- |
+| Data Fix - DATA.csv | ad69f257005795e69fe56006f32e913e8231777a6cb66bcb40782cdd7eea0eb5 | 45aed9ed91043495c9edd63dca80db0af9039bbe6362a17aa541630ab1d41196 |
+| data/lampung_panel_clean.csv | becc5801facc6ee6f04a5d1906646a71eaa9e0c45c3cb45c22e6febb506a8431 | 0812042e7fba6261edc03ffc483eea73191c22e9fe0715d73be297eb8aa6c3f1 |
 
 Angka CSV disimpan dengan presisi perhitungan R; laporan menampilkan dua desimal. Selisih kecil akibat pembulatan tabel tidak mengubah perhitungan. Pipeline panel lama dan kedua laporan lama dipertahankan sebagai arsip, bukan sumber kesimpulan deret waktu ini.
 
 ## Referensi metode
 
 Hyndman, R. J. & Athanasopoulos, G. *Forecasting: Principles and Practice*, edisi ketiga: [metode sederhana](https://otexts.com/fpp3/simple-methods.html), [evaluasi ketepatan](https://otexts.com/fpp3/accuracy.html), [evaluasi berbasis urutan waktu](https://otexts.com/fpp3/tscv.html), dan [seri pendek](https://otexts.com/fpp3/long-short-ts.html). Referensi publikasi IKP tercantum pada matriks sumber di bagian 2.
-

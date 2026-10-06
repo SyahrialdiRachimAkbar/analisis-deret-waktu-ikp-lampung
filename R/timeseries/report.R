@@ -18,13 +18,15 @@ markdown_table <- function(x, names = colnames(x), digits = 2) {
 }
 
 write_report <- function(d, audit, changes, summaries, dispersion, predictions,
-                         accuracy_region, accuracy_group, accuracy_year, discrepancies, inputs) {
+                         accuracy_region, accuracy_group, accuracy_year, discrepancies, inputs,
+                         ledger, original_discrepancies, sensitivity_values, sensitivity_forecasts) {
   county_early <- summaries[summaries$tipe == "Kabupaten" & summaries$tahun_awal == 2018, ]
   county_recent <- summaries[summaries$tipe == "Kabupaten" & summaries$tahun_awal == 2022, ]
   city <- summaries[summaries$tipe == "Kota", ]
   city_accuracy <- accuracy_region[accuracy_region$tipe == "Kota", ]
   group_city <- accuracy_group[accuracy_group$tipe == "Kota", ]
   best <- group_city$metode[group_city$MAE_poin == min(group_city$MAE_poin)]
+  best_rmse <- group_city$metode[group_city$RMSE_poin == min(group_city$RMSE_poin)]
   valid_changes <- sum(is.finite(changes$perubahan_poin))
   valid_forecasts <- sum(is.finite(predictions$ramalan))
   year_value <- function(year, col) dispersion[dispersion$tahun == year, col]
@@ -52,6 +54,11 @@ write_report <- function(d, audit, changes, summaries, dispersion, predictions,
   year_display$n_ramalan <- as.character(year_display$n_ramalan)
   mismatch <- discrepancies[!discrepancies$cocok, c("kabupaten", "tahun", "ikp_proyek", "ikp_sumber_provinsi", "selisih_poin")]
   mismatch$tahun <- as.character(mismatch$tahun)
+  ledger_display <- ledger[c("kabupaten", "tahun", "ikp_asal", "ikp_provinsi", "ikp_analisis", "keputusan", "tingkat_bukti")]
+  ledger_display$tahun <- as.character(ledger_display$tahun)
+  sensitivity_forecasts_display <- sensitivity_forecasts[c("skenario", "metode", "n_ramalan", "n_tahun_uji", "MAE_poin", "RMSE_poin")]
+  sensitivity_forecasts_display$n_ramalan <- as.character(sensitivity_forecasts_display$n_ramalan)
+  sensitivity_forecasts_display$n_tahun_uji <- as.character(sensitivity_forecasts_display$n_tahun_uji)
   lines <- c(
     "# Analisis Deret Waktu Indeks Ketahanan Pangan Kabupaten/Kota di Lampung",
     "",
@@ -63,7 +70,7 @@ write_report <- function(d, audit, changes, summaries, dispersion, predictions,
     "",
     "## Ringkasan",
     "",
-    sprintf("Data mencakup %d observasi: 13 kabupaten dan 2 kota, masing-masing tujuh tahun. Kolom IKP dan identitas wilayah cocok 105/105 antara data mentah dan CSV bersih. Dari 90 kandidat perubahan tahunan, %d dihitung di dalam segmen dan %d dikecualikan pada batas definisi komponen.", nrow(d), valid_changes, nrow(changes) - valid_changes),
+    sprintf("Data mencakup %d observasi: 13 kabupaten dan 2 kota, masing-masing tujuh tahun. Data mentah dan CSV bersih asal cocok 105/105. Analisis memakai salinan dengan satu koreksi berbukti primer: Tanggamus 2020, 76,67 menjadi 74,67. Nilai asal tetap tersimpan. Dari 90 kandidat perubahan tahunan, %d dihitung di dalam segmen dan %d dikecualikan pada batas definisi komponen.", nrow(d), valid_changes, nrow(changes) - valid_changes),
     "",
     sprintf("Dalam segmen kabupaten 2018–2020, rata-rata sederhana skor meningkat dari %s ke %s; simpangan baku antarwilayah berubah dari %s ke %s. Dalam segmen 2022–2023, rata-rata berubah dari %s ke %s dan simpangan baku dari %s ke %s. Angka ini mendeskripsikan skor pada segmen masing-masing; tidak membuktikan perubahan kausal atau keterbandingan penuh antar-edisi.",
       number_id(year_value(2018, "rata_ikp")), number_id(year_value(2020, "rata_ikp")), number_id(year_value(2018, "sd_ikp")), number_id(year_value(2020, "sd_ikp")),
@@ -108,11 +115,22 @@ write_report <- function(d, audit, changes, summaries, dispersion, predictions,
     "",
     "### 2.2. Pencocokan dan selisih sumber",
     "",
-    sprintf("Pencocokan ke berkas Satu Data Lampung yang telah tersimpan menghasilkan **%d/%d cocok**, dengan lima selisih berikut. Data proyek dipertahankan; sumber pembanding tidak otomatis menggantikannya.", sum(discrepancies$cocok), nrow(discrepancies)),
+    sprintf("Input asal cocok **%d/%d** dengan sumber provinsi. Kelima selisih memiliki keputusan dan tingkat bukti dalam [catatan rekonsiliasi](review/timeseries/rekonsiliasi_nilai.csv). Tanggamus 2020 dikoreksi pada salinan analisis menjadi 74,67 sesuai Lampiran 1 dan tabel peringkat [publikasi primer IKP 2020](https://badanpangan.go.id/storage/app/media/2021/ikp-2020-20210120fix.pdf). Empat nilai lainnya dipertahankan karena didukung publikasi primer atau dokumen pemerintah daerah; dua keputusan berbukti cuplikan terindeks tetap memiliki keterbatasan akses. Sesudah rekonsiliasi, **%d/%d** nilai analisis cocok dengan provinsi; empat selisih tersisa bukan koreksi yang tertunda secara otomatis.", sum(original_discrepancies$cocok), nrow(original_discrepancies), sum(discrepancies$cocok), nrow(discrepancies)),
+    "",
+    markdown_table(ledger_display,
+      c("Wilayah", "Tahun", "Nilai asal", "Provinsi", "Nilai analisis", "Keputusan", "Bukti")),
+    "",
+    "Selisih sesudah rekonsiliasi:",
     "",
     markdown_table(mismatch, c("Wilayah", "Tahun", "IKP proyek", "IKP sumber provinsi", "Selisih (poin)")),
     "",
-    "Untuk IKP 2018, audit tersimpan mencatat 15/15 cocok dengan publikasi primer, termasuk peringkat. Itu bukti audit sebelumnya; isi PDF lokal tidak diekstraksi ulang pada pipeline ini. Pencocokan provinsi dilakukan lewat nama wilayah dengan menghapus awalan `Kota`, bukan lewat ID internal. Metadata geometri dan kode pada sumber lain tidak dipakai sebagai acuan otomatis.",
+    "Untuk IKP 2018, audit skor tersimpan mencatat 15/15 cocok dengan publikasi primer, termasuk peringkat. Metodologi PDF lokal berhasil diperiksa ulang: produksi tetap 2014–2016, Susenas 2017, bobot 9/8 indikator, dan rumus umum standardisasi. Pemeriksaan ini tidak membuktikan parameter normalisasi identik lintas-edisi. Pencocokan provinsi dilakukan lewat nama wilayah dengan menghapus awalan `Kota`, bukan lewat ID internal.",
+    "",
+    "### 2.3. Sensitivitas terhadap pilihan nilai",
+    "",
+    "Tiga skenario dihitung tanpa mengubah input: nilai asal; nilai rekonsiliasi (analisis utama); dan semua nilai pembanding provinsi sebagai uji sensitivitas. Skenario provinsi bukan rekomendasi penggantian data: publikasi primer justru mendukung beberapa nilai asal. Perubahan urutan wilayah berikut menunjukkan ketergantungan ukuran fluktuasi pada pilihan sumber.",
+    "",
+    markdown_table(sensitivity_values, c("Skenario", "Rata-rata kabupaten 2020", "SD kabupaten 2020", "Wilayah SD perubahan tertinggi 2018–2020", "SD perubahan tertinggi", "MAE naïve kota", "MAE drift kota")),
     "",
     "## 3. Metode analisis deret waktu",
     "",
@@ -148,7 +166,7 @@ write_report <- function(d, audit, changes, summaries, dispersion, predictions,
     "",
     "### 4.2. Tren per wilayah dan segmen",
     "",
-    "**Kabupaten 2018–2020.** Setiap wilayah memiliki tiga skor dan dua perubahan. Interpretasi tetap bersyarat karena metodologi 2019 belum sepenuhnya diperiksa.",
+    "**Kabupaten 2018–2020.** Setiap wilayah memiliki tiga skor dan dua perubahan. Ini ukuran deskriptif dengan informasi sangat terbatas; tidak dipakai untuk klasifikasi stabil/tidak stabil. Cuplikan primer 2019 mendukung jumlah indikator dan rumus umum, tetapi audit penuh keterbandingan input belum selesai.",
     "",
     markdown_table(summary_display(county_early), summary_names),
     "",
@@ -194,6 +212,15 @@ write_report <- function(d, audit, changes, summaries, dispersion, predictions,
     "",
     sprintf("Metode **%s** memiliki MAE gabungan kota yang lebih rendah pada pengujian ini. Besarnya error per tahun harus ikut dibaca karena lonjakan skor dapat mendominasi ringkasan. Tiga target tidak cukup untuk menyatakan metode terbaik secara umum, apalagi untuk kabupaten yang tidak diestimasi.", paste(best, collapse = " dan ")),
     "",
+    sprintf("Menurut RMSE gabungan, metode dengan nilai lebih rendah adalah **%s**. Pemilihan ukuran error mengubah urutan metode; laporan tidak menetapkan pemenang universal.", paste(best_rmse, collapse = " dan ")),
+    "",
+    "### 4.6. Sensitivitas terhadap tahun target",
+    "",
+    "Evaluasi diulang dengan mengeluarkan satu tahun target secara bergantian. Setiap skenario pengurangan tahun hanya memiliki empat ramalan per metode dari dua tahun target. Ini pemeriksaan deskriptif ketahanan hasil; bukan uji signifikansi atau penyetelan model. Kesimpulan pilihan metode harus mempertimbangkan perubahan urutan MAE/RMSE dan tidak menganggap enam error sebagai enam tahun independen.",
+    "",
+    markdown_table(sensitivity_forecasts_display,
+      c("Skenario", "Metode", "Ramalan uji", "Tahun uji", "MAE", "RMSE")),
+    "",
     "![Error ramalan](output/timeseries/05_error_peramalan.png)",
     "",
     "![Aktual dan ramalan historis kota](output/timeseries/06_aktual_dan_ramalan_kota.png)",
@@ -203,7 +230,7 @@ write_report <- function(d, audit, changes, summaries, dispersion, predictions,
     "1. Panjang seri hanya tujuh tahun; segmentasi memperpendeknya lagi. Analisis tidak mengidentifikasi pola musiman bulanan atau siklus jangka panjang.",
     "2. Perubahan dokumen komponen tidak memberi ukuran dampak pada skor. Batas konservatif mencegah perbandingan lintas-definisi, tetapi tidak menggantikan seri yang telah diharmonisasi.",
     "3. Metodologi 2019 dan rincian lengkap 2024 belum selesai diverifikasi. Sumber input dan normalisasi yang berganti dapat memengaruhi skor, termasuk seri kota.",
-    "4. Lima perbedaan dengan sumber provinsi belum direkonsiliasi. Data dipertahankan dan selisihnya diungkapkan.",
+    "4. Lima perbedaan sumber sudah memiliki keputusan terdokumentasi; satu koreksi memakai publikasi primer. Keputusan Metro 2019 dan Lampung Selatan 2024 masih memakai cuplikan terindeks/dokumen daerah sehingga kekuatan bukti dibedakan. Uji sensitivitas menunjukkan kesimpulan fluktuasi bergantung pada nilai sumber.",
     "5. Evaluasi ramalan hanya menghasilkan tiga target per kota. Keenam error gabungan per metode tidak dianggap sebagai enam tahun observasi independen.",
     "6. Perubahan skor tidak membuktikan pengaruh kebijakan, COVID, atau faktor sosial-ekonomi tertentu. Hasil tidak digunakan sebagai peringkat prioritas intervensi.",
     "",
@@ -219,10 +246,13 @@ write_report <- function(d, audit, changes, summaries, dispersion, predictions,
     "",
     "Pipeline memakai base R dan ggplot2 yang telah terpasang. Tidak memerlukan jaringan atau pemasangan package. Pipeline menjalankan pemeriksaan rumus, kebocoran waktu, batas metodologi, data invalid, integritas input, serta kelengkapan ekspor sebelum menyatakan selesai.",
     "",
+    "Penyiapan komputer baru dijelaskan di [README](README.md): R 4.5.2, versi paket dikunci dalam renv.lock, dan restore eksplisit ke .library/. Versi paket diperiksa terhadap manifest sebelum analisis. Workflow GitHub Actions menguji clone bersih pada Windows dan Linux; status eksekusi CI dilihat di tab Actions repo, tidak diasumsikan lulus hanya karena workflow tersedia.",
+    "",
     "Berkas di `output/timeseries/`:",
     "",
     "- `data_analisis.csv`: 105 skor, jenis wilayah, segmen, dan status analisis.",
     "- `audit_metodologi.csv`: bukti per edisi dan jenis wilayah; `audit_sumber_provinsi.csv` serta `selisih_sumber_provinsi.csv`: audit nilai sumber.",
+    "- `audit_sumber_provinsi_asal.csv` dan `rekonsiliasi_nilai.csv`: perbandingan sebelum koreksi dan seluruh keputusan sumber; `sensitivitas_nilai.csv` serta `sensitivitas_tahun_uji.csv`: ketahanan hasil.",
     "- `perubahan_tahunan.csv`: seluruh kandidat perubahan termasuk nilai yang dikecualikan; `ringkasan_wilayah_per_segmen.csv`: ukuran tren dan fluktuasi.",
     "- `kesenjangan_kabupaten.csv`: potret tahunan serta perubahan yang memenuhi batas.",
     "- `backtest_detail.csv`: seluruh kandidat ramalan, jendela latihan, aktual, error, dan status.",
@@ -230,9 +260,9 @@ write_report <- function(d, audit, changes, summaries, dispersion, predictions,
     "- Enam grafik dalam format PNG 300 dpi dan PDF.",
     "- `hash_input_sha256.csv`, `integritas_arsip.csv`, `versi_kode.csv`, `session_info.txt`, dan `run.log`: bukti reproduksi dan integritas.",
     "",
-    "Hash SHA256 input:",
+    "Hash SHA256 input: kolom byte menunjukkan berkas lokal; kolom teks LF menjadi acuan integritas yang hanya menormalkan CRLF ke LF. Perubahan angka/isi lain tetap ditolak. .gitattributes menetapkan CSV sebagai teks LF agar clone memiliki format konsisten.",
     "",
-    markdown_table(inputs, c("Input", "SHA256")),
+    markdown_table(inputs, c("Input", "SHA256 byte lokal", "SHA256 teks LF")),
     "",
     "Angka CSV disimpan dengan presisi perhitungan R; laporan menampilkan dua desimal. Selisih kecil akibat pembulatan tabel tidak mengubah perhitungan. Pipeline panel lama dan kedua laporan lama dipertahankan sebagai arsip, bukan sumber kesimpulan deret waktu ini.",
     "",
@@ -240,6 +270,6 @@ write_report <- function(d, audit, changes, summaries, dispersion, predictions,
     "",
     "Hyndman, R. J. & Athanasopoulos, G. *Forecasting: Principles and Practice*, edisi ketiga: [metode sederhana](https://otexts.com/fpp3/simple-methods.html), [evaluasi ketepatan](https://otexts.com/fpp3/accuracy.html), [evaluasi berbasis urutan waktu](https://otexts.com/fpp3/tscv.html), dan [seri pendek](https://otexts.com/fpp3/long-short-ts.html). Referensi publikasi IKP tercantum pada matriks sumber di bagian 2.",
     "")
-  writeLines(enc2utf8(lines), "LAPORAN_deret_waktu.md", useBytes = TRUE)
+  writeLines(enc2utf8(lines[seq_len(length(lines) - 1L)]), "LAPORAN_deret_waktu.md", useBytes = TRUE)
   cat("Laporan dibuat dari tabel hasil: LAPORAN_deret_waktu.md\n")
 }

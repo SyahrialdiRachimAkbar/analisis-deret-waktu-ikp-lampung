@@ -12,14 +12,14 @@ methodology_audit <- function() {
     "https://esakip.badanpangan.go.id/dok/pk/dok_202541754360657.pdf"
   )
   titles <- c("IKP Indonesia 2018 (PDF lokal dan audit sumber tersimpan)",
-    "IKP Indonesia 2019 (URL ditemukan; isi tidak berhasil diakses)",
+    "IKP Indonesia 2019 (cuplikan primer terindeks; akses PDF penuh belum berhasil)",
     "IKP 2020", "IKP 2021", "IKP 2022", "IKP 2023",
     "Laporan Kinerja Deputi Bidang Kerawanan Pangan dan Gizi 2024")
-  pages <- c("PDF lokal: Tabel 4-5; review/verify_output.log bagian 8",
-    "Belum diperiksa", "PDF hlm 7-10 (cetak 3-6)",
+  pages <- c("PDF lokal hlm 7-10 (cetak 3-6); skor: audit tersimpan Tabel 4-5",
+    "Cuplikan primer terindeks: jumlah indikator dan rumus umum; akses penuh belum berhasil", "PDF hlm 7-10 (cetak 3-6)",
     "PDF hlm 10-14 (cetak 3-7)", "PDF hlm 12-16 (cetak 3-7)",
     "PDF hlm 12-15 (cetak 3-6)", "PDF hlm 34 dan 36-37 (cetak 25 dan 27-28)")
-  inputs <- c("Produksi 2014-2016; sumber lain tidak diaudit ulang",
+  inputs <- c("Produksi tetap 2014-2016; Susenas 2017; metodologi PDF lokal diperiksa ulang",
     "Belum terverifikasi", "Produksi dan Susenas 2019; SSGBI 2019",
     "Produksi dan Susenas 2020; sumber lain lihat publikasi",
     "Produksi dan Susenas 2021; SSGI 2021",
@@ -31,8 +31,8 @@ methodology_audit <- function() {
     "Padi, jagung, ubi kayu, ubi jalar, sagu, stok beras daerah",
     "Padi, jagung, ubi kayu, ubi jalar, sagu, stok beras daerah",
     "Padi, jagung, ubi kayu, ubi jalar, sagu, stok/CPPD, bantuan pangan CPP")
-  notes <- c("Skor 2018: audit sebelumnya mencatat 15/15 cocok ke PDF primer. Pemeriksaan ulang isi PDF lokal tidak tersedia tanpa alat ekstraksi tambahan.",
-    "URL primer tidak berhasil dibaca; jumlah indikator dan rincian definisi tidak diasumsikan telah terverifikasi.",
+  notes <- c("Metodologi PDF lokal diperiksa ulang dengan pdfminer.six: komoditas; Susenas 2017; bobot 9/8; z-score/distance to scale. Skor 2018 memakai audit tersimpan 15/15. Vintage input berbeda tidak membuktikan kesamaan pengukuran antar-edisi.",
+    "PDF primer penuh belum dapat dibaca. Cuplikan primer terindeks mendukung 9/8 indikator dan rumus z-score/distance to scale; Metro 75.85 juga didukung RPJPD Kota Metro. Rincian lengkap bobot dan input belum diverifikasi.",
     "Jumlah indikator, bobot, dan sumber input diperiksa di publikasi primer.",
     "Stok beras daerah tercantum pada komponen ketersediaan, berbeda dari dokumen 2020. Batas konservatif untuk kabupaten.",
     "Sagu tercantum pada komponen ketersediaan, berbeda dari dokumen 2021. Batas konservatif untuk kabupaten.",
@@ -43,12 +43,16 @@ methodology_audit <- function() {
     weights <- if (county) "0.30;0.15;0.075;0.075;0.05;0.15;0.05;0.05;0.10" else
       "0;0.20;0.125;0.125;0.08;0.18;0.08;0.08;0.13"
     data.frame(tahun = 2018:2024, tipe = type, judul = titles, url = urls,
-      lokasi_bukti = pages, jumlah_indikator = c(if (county) 9L else 8L, NA_integer_, rep(if (county) 9L else 8L, 5)),
+      lokasi_bukti = pages, jumlah_indikator = rep(if (county) 9L else 8L, 7),
       bobot_urutan_indikator = c(weights, NA, rep(weights, 4), NA),
       tahun_input = inputs,
       komponen_ketersediaan = if (county) availability else rep("Tidak masuk indeks kota", 7),
       batas_sebelum_tahun = county & (2018:2024 %in% c(2021, 2022, 2024)),
-      status = c("audit_tersimpan", "belum_terverifikasi", rep("terverifikasi_parsial", 5)),
+      status = c("metodologi_primer_dan_audit_skor_tersimpan", "cuplikan_primer_terindeks", rep("terverifikasi_parsial", 5)),
+      normalisasi_dokumen = c("z-score dan distance to scale 0-100 (PDF lokal diperiksa ulang)", "z-score/distance to scale (cuplikan primer terindeks)",
+        rep("z-score dan distance to scale 0-100", 4), "Publikasi teknis belum diperiksa penuh"),
+      parameter_normalisasi_identik_terverifikasi = FALSE,
+      harmonisasi_terverifikasi = FALSE,
       catatan = if (county) notes else paste(notes, "Perubahan komponen ketersediaan tidak langsung berlaku pada indeks kota; tidak ada batas kota yang ditetapkan dari bukti ini."),
       tanggal_pemeriksaan = "2026-10-06", stringsAsFactors = FALSE)
   })

@@ -1,0 +1,4 @@
+"skenario","rata_kabupaten_2020","sd_kabupaten_2020","wilayah_sd_perubahan_tertinggi","sd_perubahan_tertinggi","MAE_naive_kota","MAE_drift_kota"
+"asli",78.08,4.16199070958438,"Tanggamus",3.16076731190387,4.635,4.97080555555556
+"rekonsiliasi",77.9261538461539,4.25439290314834,"Tanggamus",4.57498087427696,4.635,4.97080555555556
+"pembanding_provinsi",77.6784615384615,4.58189161474066,"Lampung Barat",5.43058007951269,4.635,4.97080555555556

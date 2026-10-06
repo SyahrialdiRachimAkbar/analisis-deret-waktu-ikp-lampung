@@ -11,7 +11,18 @@ tabel CSV, serta grafik PNG/PDF. Tidak ada kewajiban ARIMA atau model tertentu.
 Jalankan dari root project dengan Rscript `--vanilla`; hasil masuk `output/timeseries/`.
 Pipeline hanya memakai base R dan ggplot2 yang sudah terpasang, tanpa akses jaringan.
 
-**Status:** pipeline telah dijalankan, exit 0. Validasi raw/clean cocok 105/105.
+**Revisi sesudah evaluasi:** input asal tetap identik; satu koreksi primer Tanggamus
+2020 (76,67 → 74,67) diterapkan di salinan analisis melalui catatan rekonsiliasi.
+Kelima selisih sumber memiliki keputusan dan tingkat bukti; nilai analisis kini
+86/90 cocok dengan provinsi. Rata-rata kabupaten 2020 menjadi 77,926154; SD menjadi
+4,254393. SD perubahan Tanggamus 2018–2020 menjadi 4,574981 dengan satu tahun turun.
+Normalisasi hash teks LF mengatasi perubahan CRLF/LF saat clone; tahun pecahan
+ditolak sebelum konversi. Renv.lock dan manifest mengunci 16 dependensi runtime.
+Workflow CI menguji Windows/Linux. Hasil uji lokal dan CI dicatat terpisah.
+Sensitivitas nilai dan tahun uji ditambahkan: pengeluaran target 2022 membuat
+drift memiliki MAE lebih rendah. Hasil pendek tetap eksploratif.
+
+**Status implementasi awal:** pipeline telah dijalankan, exit 0. Validasi raw/clean cocok 105/105.
 Pemeriksaan rumus, kebocoran waktu, batas metode, data invalid, ekspor CSV, dan
 integritas arsip lulus. Enam grafik PNG 300 dpi dan enam PDF tersedia.
 
@@ -28,8 +39,9 @@ jejak sumber ada di `review/timeseries/SOURCES.md`.
   kurang dari empat tahun latihan dalam segmen target. Nilai kosong bukan error nol.
 - MAE gabungan kota: naïve 4,635 poin; drift 4,970806 poin. RMSE justru lebih rendah
   untuk drift. Tiga tahun target tidak cukup untuk klaim keunggulan umum.
-- Perbandingan nilai ke sumber provinsi: 85/90 cocok; lima selisih dicatat tanpa
-  mengubah data. Metodologi 2019 dan rincian teknis lengkap 2024 belum terverifikasi.
+- Perbandingan input asal ke provinsi 85/90; sesudah satu koreksi analisis 86/90.
+  Metodologi 2018 diperiksa ulang dari PDF; 2019 memiliki bukti cuplikan primer
+  terindeks. Audit penuh parameter normalisasi dan rincian 2024 belum terverifikasi.
 - Seluruh hasil **eksploratif dan bersyarat**; tidak ada klaim sebab-akibat atau
   kesimpulan perubahan kabupaten sepanjang 2018–2024 melintasi batas definisi.
 - Data mentah, CSV bersih, skrip panel lama, dan kedua laporan lama tetap identik.

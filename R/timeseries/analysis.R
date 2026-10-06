@@ -8,6 +8,7 @@ validate_panel <- function(d, years = 2018:2024, n_regions = 15L) {
   assert(all(c("kode", "kabupaten", "tahun", "ikp") %in% names(d)), "Kolom wajib tidak lengkap.")
   assert(!anyNA(d[c("kode", "kabupaten", "tahun", "ikp")]), "Ada NA pada kolom wajib.")
   assert(all(nzchar(trimws(d$kode))) && all(nzchar(trimws(d$kabupaten))), "ID/nama kosong.")
+  assert(is.numeric(d$tahun) && all(is.finite(d$tahun)) && all(d$tahun == trunc(d$tahun)), "Tahun harus numerik, bulat, dan finite.")
   assert(is.numeric(d$ikp) && all(is.finite(d$ikp)) && all(d$ikp >= 0 & d$ikp <= 100), "IKP harus numerik dan dalam 0-100.")
   assert(!anyDuplicated(paste(d$kode, d$tahun)), "Kunci wilayah-tahun duplikat.")
   assert(length(unique(d$kode)) == n_regions && nrow(d) == n_regions * length(years), "Ukuran panel tidak sesuai.")
@@ -26,14 +27,15 @@ read_raw_ikp <- function(path) {
   f <- do.call(rbind, fields)
   code <- trimws(f[, 1])
   for (i in seq_along(code)) if (!nzchar(code[i]) && i > 1) code[i] <- code[i - 1]
-  data.frame(kode = code, kabupaten = trimws(f[, 2]), tahun = as.integer(f[, 3]),
+  data.frame(kode = code, kabupaten = trimws(f[, 2]), tahun = as.numeric(f[, 3]),
     ikp = as.numeric(sub(",", ".", trimws(f[, 4]), fixed = TRUE)))
 }
 
 attach_methodology <- function(d, audit) {
   assert(!anyDuplicated(paste(audit$tipe, audit$tahun)), "Metadata metodologi duplikat.")
   assert(!anyNA(audit$batas_sebelum_tahun), "Status batas metodologi kosong.")
-  d <- d[order(d$kode, d$tahun), c("kode", "kabupaten", "tahun", "ikp")]
+  cols <- c("kode", "kabupaten", "tahun", "ikp", intersect(c("ikp_asal", "dikoreksi", "status_nilai"), names(d)))
+  d <- d[order(d$kode, d$tahun), cols]
   d$tipe <- ifelse(grepl("^Kota ", d$kabupaten), "Kota", "Kabupaten")
   idx <- match(paste(d$tipe, d$tahun), paste(audit$tipe, audit$tahun))
   assert(!anyNA(idx), "Metadata metodologi tidak mencakup semua tahun/jenis wilayah.")
@@ -105,6 +107,7 @@ one_step <- function(values, method) {
 }
 
 backtest <- function(d, targets = 2022:2024, min_train = 4L) {
+  assert(length(min_train) == 1L && is.finite(min_train) && min_train == trunc(min_train) && min_train >= 2L, "Minimal latihan harus bilangan bulat >= 2.")
   out <- list()
   for (x in split(d, d$kode)) {
     x <- x[order(x$tahun), ]
@@ -121,7 +124,7 @@ backtest <- function(d, targets = 2022:2024, min_train = 4L) {
           latihan_akhir = if (nrow(train)) max(train$tahun) else NA_integer_, n_latihan = nrow(train),
           aktual = actual$ikp, ramalan = pred, error_poin = if (eligible) actual$ikp - pred else NA_real_,
           di_luar_skala = if (eligible) pred < 0 || pred > 100 else NA,
-          status = if (eligible) "eksploratif_bersyarat" else "dikecualikan_latihan_segmen_kurang_dari_4")
+          status = if (eligible) "eksploratif_bersyarat" else paste0("dikecualikan_latihan_segmen_kurang_dari_", min_train))
       }
     }
   }
@@ -157,12 +160,22 @@ source_discrepancies <- function(d, province_path) {
   do.call(rbind, audit)
 }
 
-sha256 <- function(path) {
+sha256 <- function(path, canonical_text = FALSE) {
+  if (canonical_text) {
+    bytes <- readBin(path, "raw", n = file.info(path)$size)
+    normalized <- charToRaw(gsub("\r\n", "\n", rawToChar(bytes), fixed = TRUE))
+    temporary <- tempfile("ikp-hash-")
+    on.exit(unlink(temporary), add = TRUE)
+    writeBin(normalized, temporary)
+    path <- temporary
+  }
   if (.Platform$OS.type == "windows") {
     result <- system2("certutil", c("-hashfile", shQuote(normalizePath(path)), "SHA256"), stdout = TRUE, stderr = TRUE)
     match <- grep("^[a-fA-F0-9]{64}$", trimws(result), value = TRUE)
   } else {
-    result <- system2("sha256sum", shQuote(path), stdout = TRUE)
+    command <- if (nzchar(Sys.which("sha256sum"))) "sha256sum" else "shasum"
+    args <- if (command == "shasum") c("-a", "256", shQuote(path)) else shQuote(path)
+    result <- system2(command, args, stdout = TRUE)
     match <- substr(result, 1, 64)
   }
   assert(length(match) == 1L && grepl("^[a-fA-F0-9]{64}$", match), "SHA256 tidak dapat dihitung.")

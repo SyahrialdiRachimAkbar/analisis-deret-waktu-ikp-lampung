@@ -1,5 +1,45 @@
 # CONTEXT: Proyek Analisis Ketahanan Pangan Lampung
 
+## 0. Desain aktif — Analisis Deret Waktu (2026-10-06)
+
+**Keputusan penulis:** tugas PSD bertema **Analisis Deret Waktu**, tetap memakai
+dataset yang tersedia. Fokus utama: tren, stabilitas perubahan skor, dan kesenjangan
+IKP; evaluasi naïve/drift sebagai tambahan. Hasil akhir: laporan Markdown, kode R,
+tabel CSV, serta grafik PNG/PDF. Tidak ada kewajiban ARIMA atau model tertentu.
+
+**Rujukan utama sekarang:** `LAPORAN_deret_waktu.md` dan `R/timeseries/run.R`.
+Jalankan dari root project dengan Rscript `--vanilla`; hasil masuk `output/timeseries/`.
+Pipeline hanya memakai base R dan ggplot2 yang sudah terpasang, tanpa akses jaringan.
+
+**Status:** pipeline telah dijalankan, exit 0. Validasi raw/clean cocok 105/105.
+Pemeriksaan rumus, kebocoran waktu, batas metode, data invalid, ekspor CSV, dan
+integritas arsip lulus. Enam grafik PNG 300 dpi dan enam PDF tersedia.
+
+**Temuan audit baru:** jumlah indikator 9 kabupaten / 8 kota tidak menjamin rincian
+definisi tetap. Dokumen 2021 memasukkan stok beras daerah; 2022 memasukkan sagu;
+laporan resmi 2024 juga menyebut bantuan pangan CPP pada komponen ketersediaan.
+Pipeline memakai batas **konservatif** kabupaten pada 2021, 2022, dan 2024.
+Ini bukti perbedaan rincian dokumen, bukan estimasi dampak perubahan metode terhadap
+skor Lampung. Audit per tahun ada di `output/timeseries/audit_metodologi.csv`;
+jejak sumber ada di `review/timeseries/SOURCES.md`.
+
+- 105 skor tetap tersedia; 51 perubahan tahunan dihitung dalam segmen, 39 dikecualikan.
+- 12 ramalan uji untuk dua kota; 78 kandidat kabupaten tidak diestimasi karena
+  kurang dari empat tahun latihan dalam segmen target. Nilai kosong bukan error nol.
+- MAE gabungan kota: naïve 4,635 poin; drift 4,970806 poin. RMSE justru lebih rendah
+  untuk drift. Tiga tahun target tidak cukup untuk klaim keunggulan umum.
+- Perbandingan nilai ke sumber provinsi: 85/90 cocok; lima selisih dicatat tanpa
+  mengubah data. Metodologi 2019 dan rincian teknis lengkap 2024 belum terverifikasi.
+- Seluruh hasil **eksploratif dan bersyarat**; tidak ada klaim sebab-akibat atau
+  kesimpulan perubahan kabupaten sepanjang 2018–2024 melintasi batas definisi.
+- Data mentah, CSV bersih, skrip panel lama, dan kedua laporan lama tetap identik.
+
+**Bagian 1–12 di bawah adalah konteks historis analisis panel**, bukan desain aktif.
+Khususnya, klaim lama tentang komponen ketersediaan yang dibekukan pada angka
+2014–2016 tidak berlaku otomatis untuk semua edisi 2018–2024; sumber tahunan baru
+menunjukkan pembaruan tahun input. P-value WCB desain lama belum diaudit ulang
+dan tidak digunakan oleh project deret waktu.
+
 ## 1. Latar Belakang
 Proyek akademik (tugas PSD / calon topik TA) yang melanjutkan proyek Kerja Praktik (KP).
 Tujuan: menganalisis faktor-faktor yang memengaruhi Indeks Ketahanan Pangan (IKP)

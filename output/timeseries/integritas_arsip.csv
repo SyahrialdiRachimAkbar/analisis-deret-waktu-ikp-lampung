@@ -1,0 +1,20 @@
+"file","md5_sebelum","md5_sesudah","identik"
+"Data Fix - DATA.csv","09d8a3714b44944abd3f48f46721e7cb","09d8a3714b44944abd3f48f46721e7cb",TRUE
+"data/lampung_panel_clean.csv","1dcf8ad2a0793dc36080687f34428264","1dcf8ad2a0793dc36080687f34428264",TRUE
+"laporan_draft.md","3482e4d18afa07d610930ac95421ae8f","3482e4d18afa07d610930ac95421ae8f",TRUE
+"LAPORAN_rev.md","ea40b2ff9d82c6e8bf06213358fd5c72","ea40b2ff9d82c6e8bf06213358fd5c72",TRUE
+"R/01_clean_data.R","aeee2e37054471ce11e36ac501010df1","aeee2e37054471ce11e36ac501010df1",TRUE
+"R/02_reality_check.R","85a22651c0a6bc88d572fdb8b449a5cb","85a22651c0a6bc88d572fdb8b449a5cb",TRUE
+"R/03_model_selection.R","909fab44a3cdc9534051eb95cc0aed6a","909fab44a3cdc9534051eb95cc0aed6a",TRUE
+"R/04_main_estimation.R","82d419352123e5b37bcaceb5bd0901cb","82d419352123e5b37bcaceb5bd0901cb",TRUE
+"R/05_robustness.R","b808efe1cabd3d49ad99690c4d853380","b808efe1cabd3d49ad99690c4d853380",TRUE
+"R/06_descriptives.R","c3aaf8c64ffce5d25fd041df616e499e","c3aaf8c64ffce5d25fd041df616e499e",TRUE
+"R/07_data_structure.R","890da7cf8db1b70953d6adea077f5d78","890da7cf8db1b70953d6adea077f5d78",TRUE
+"R/08_audit_hashes.R","a183dd7fd9c96e8d4add81d4868adcfe","a183dd7fd9c96e8d4add81d4868adcfe",TRUE
+"R/09_parsing_audit.R","5c5a74fd2612f35908a8e1c63bfce4e2","5c5a74fd2612f35908a8e1c63bfce4e2",TRUE
+"R/10_validation_totals.R","a4230b41b33d5aeaacbc818b23ac092a","a4230b41b33d5aeaacbc818b23ac092a",TRUE
+"R/11_year_fe_inference.R","26a6df3d69d90a0b64e33debeb6b27f6","26a6df3d69d90a0b64e33debeb6b27f6",TRUE
+"review/sources/BKP_Indeks_Ketahanan_Pangan_2018.pdf","35198e9dcb582f7f79f4c191efcc3e8f","35198e9dcb582f7f79f4c191efcc3e8f",TRUE
+"review/sources/bapanas_ikp_kabkota_2018-2024_514.csv","748321744fa5ffdd1527250f8a7e48a4","748321744fa5ffdd1527250f8a7e48a4",TRUE
+"review/sources/bapanas_ikp_kabkota_2024_12indikator.csv","47870da6accbe46f8fd2c905e342970f","47870da6accbe46f8fd2c905e342970f",TRUE
+"review/sources/lampungprov_ikp_kabkota_2019-2024.csv","04535793838757b44f7776798877c07d","04535793838757b44f7776798877c07d",TRUE

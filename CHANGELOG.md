@@ -5,6 +5,41 @@ Format: tanggal — item — apa yang berubah — kenapa — dampak ke kesimpula
 
 ---
 
+## 2026-10-06 — Project aktif dialihkan ke analisis deret waktu IKP
+
+**Arahan penulis:** tetap memakai dataset saat ini dengan tema Analisis Deret Waktu.
+Inti analisis adalah tren, stabilitas perubahan skor, dan kesenjangan; naïve/drift
+sebagai evaluasi tambahan. Paket hasil: laporan dan kode R, CSV, PNG 300 dpi, PDF.
+
+**Implementasi:** pipeline terpisah `R/timeseries/run.R` beserta modul analisis,
+audit metodologi, pemeriksaan, grafik, dan pembuat laporan. Hasil di
+`output/timeseries/`; naskah `LAPORAN_deret_waktu.md` dibangkitkan dari hasil kode.
+Ditambahkan README dan jejak sumber `review/timeseries/SOURCES.md`.
+
+**Temuan sumber yang mengubah cakupan:** perbedaan rincian komponen ketersediaan
+pada dokumen 2021 (stok beras), 2022 (sagu), dan laporan resmi 2024 (bantuan pangan).
+Perubahan tersebut diterapkan sebagai batas konservatif pada seri kabupaten.
+Pipeline tidak menganggap jumlah indikator yang tetap sebagai bukti harmonisasi.
+Metodologi 2019 dan rincian penuh 2024 masih ditandai belum lengkap.
+
+**Hasil eksekusi:** exit 0; raw/clean cocok 105/105. Dari 90 kandidat perubahan,
+51 dihitung dan 39 dikecualikan. Dari 90 kandidat ramalan, 12 dihitung untuk dua kota
+dan 78 kabupaten tidak diestimasi karena segmen latihan kurang dari empat tahun.
+MAE kota naïve = 4,635, drift = 4,970806; RMSE naïve = 6,105663, drift = 5,907966.
+Hasil bersifat eksploratif; tidak ada klaim kausal atau metode terbaik secara umum.
+
+**Verifikasi:** rumus pada seri konstan/tren tetap, penolakan input invalid,
+independensi ramalan terhadap data tahun target/masa depan, pemisahan segmen,
+aritmetika MAE/RMSE, kelengkapan ekspor CSV, dan hash arsip lulus. Enam grafik
+diperiksa secara visual dan label grafik dirapikan. Sumber provinsi tetap 85/90 cocok;
+lima selisih tersimpan tanpa mengganti data.
+
+**Tidak berubah:** input mentah/bersih, `R/01`–`R/11`, kedua naskah panel lama,
+dan sumber resmi yang sebelumnya tersimpan. Konteks historis tetap tersedia;
+`project_context.md` diawali desain aktif agar tidak tertukar dengan desain lama.
+
+---
+
 ## 2026-09-23 — Revisi Fase 2: efek tahun + inferensi G kecil + naskah `LAPORAN_rev.md`
 
 **Pemicu:** review desain (`review/DESIGN_REVIEW.md`, `review/PLAN.md`) menemukan tiga cacat

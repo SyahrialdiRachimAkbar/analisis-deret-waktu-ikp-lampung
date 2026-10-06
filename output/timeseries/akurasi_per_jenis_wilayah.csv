@@ -1,0 +1,5 @@
+"tipe","metode","n_ramalan","n_tahun_uji","MAE_poin","RMSE_poin","status"
+"Kabupaten","drift",0,0,,,"tidak_diestimasi"
+"Kabupaten","naive",0,0,,,"tidak_diestimasi"
+"Kota","drift",6,3,4.97080555555556,5.9079662575988,"eksploratif_bersyarat"
+"Kota","naive",6,3,4.635,6.10566267219756,"eksploratif_bersyarat"

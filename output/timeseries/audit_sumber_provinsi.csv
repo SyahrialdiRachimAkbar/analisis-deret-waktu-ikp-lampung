@@ -1,0 +1,91 @@
+"kode","kabupaten","tahun","ikp_proyek","ikp_sumber_provinsi","selisih_poin","cocok"
+"1801","Lampung Barat",2019,74.62,74.62,0,TRUE
+"1801","Lampung Barat",2020,74.02,70.8,3.22,FALSE
+"1801","Lampung Barat",2021,70.8,70.8,0,TRUE
+"1801","Lampung Barat",2022,74.34,74.34,0,TRUE
+"1801","Lampung Barat",2023,75.39,75.39,0,TRUE
+"1801","Lampung Barat",2024,76.18,76.18,0,TRUE
+"1802","Tanggamus",2019,76.55,76.55,0,TRUE
+"1802","Tanggamus",2020,76.67,74.67,2,FALSE
+"1802","Tanggamus",2021,75.34,75.34,0,TRUE
+"1802","Tanggamus",2022,73.6,73.6,0,TRUE
+"1802","Tanggamus",2023,74.19,74.19,0,TRUE
+"1802","Tanggamus",2024,76.4,76.4,0,TRUE
+"1803","Lampung Selatan",2019,78.99,78.99,0,TRUE
+"1803","Lampung Selatan",2020,79.23,79.23,0,TRUE
+"1803","Lampung Selatan",2021,79.66,79.66,0,TRUE
+"1803","Lampung Selatan",2022,81.81,81.81,0,TRUE
+"1803","Lampung Selatan",2023,85.46,85.46,0,TRUE
+"1803","Lampung Selatan",2024,84.46,84.64,-0.180000000000007,FALSE
+"1804","Lampung Timur",2019,77.38,77.38,0,TRUE
+"1804","Lampung Timur",2020,79.5,79.5,0,TRUE
+"1804","Lampung Timur",2021,81.2,81.2,0,TRUE
+"1804","Lampung Timur",2022,82.78,82.78,0,TRUE
+"1804","Lampung Timur",2023,83.55,83.55,0,TRUE
+"1804","Lampung Timur",2024,85.22,85.22,0,TRUE
+"1805","Lampung Tengah",2019,78.88,78.88,0,TRUE
+"1805","Lampung Tengah",2020,79.83,79.83,0,TRUE
+"1805","Lampung Tengah",2021,80.16,80.16,0,TRUE
+"1805","Lampung Tengah",2022,81.07,81.07,0,TRUE
+"1805","Lampung Tengah",2023,84.55,84.55,0,TRUE
+"1805","Lampung Tengah",2024,84.93,84.93,0,TRUE
+"1806","Lampung Utara",2019,71.35,71.35,0,TRUE
+"1806","Lampung Utara",2020,71.51,71.51,0,TRUE
+"1806","Lampung Utara",2021,73,73,0,TRUE
+"1806","Lampung Utara",2022,75,75,0,TRUE
+"1806","Lampung Utara",2023,74.94,74.94,0,TRUE
+"1806","Lampung Utara",2024,76.82,76.82,0,TRUE
+"1807","Way Kanan",2019,72.37,72.37,0,TRUE
+"1807","Way Kanan",2020,73.34,73.34,0,TRUE
+"1807","Way Kanan",2021,74.96,74.96,0,TRUE
+"1807","Way Kanan",2022,78.34,78.34,0,TRUE
+"1807","Way Kanan",2023,79.31,79.31,0,TRUE
+"1807","Way Kanan",2024,79.61,79.61,0,TRUE
+"1808","Tulang Bawang",2019,82.29,82.29,0,TRUE
+"1808","Tulang Bawang",2020,82.83,82.83,0,TRUE
+"1808","Tulang Bawang",2021,84.58,84.58,0,TRUE
+"1808","Tulang Bawang",2022,86.25,86.25,0,TRUE
+"1808","Tulang Bawang",2023,87.51,87.51,0,TRUE
+"1808","Tulang Bawang",2024,88.78,88.78,0,TRUE
+"1809","Pesawaran",2019,76.74,76.74,0,TRUE
+"1809","Pesawaran",2020,80.15,80.15,0,TRUE
+"1809","Pesawaran",2021,78.96,78.96,0,TRUE
+"1809","Pesawaran",2022,77.86,77.86,0,TRUE
+"1809","Pesawaran",2023,77.89,77.89,0,TRUE
+"1809","Pesawaran",2024,80.85,80.85,0,TRUE
+"1810","Pringsewu",2019,83.13,83.13,0,TRUE
+"1810","Pringsewu",2020,83.79,83.79,0,TRUE
+"1810","Pringsewu",2021,84.05,84.05,0,TRUE
+"1810","Pringsewu",2022,84.14,84.14,0,TRUE
+"1810","Pringsewu",2023,87.38,87.38,0,TRUE
+"1810","Pringsewu",2024,87.35,87.35,0,TRUE
+"1811","Mesuji",2019,81.78,81.78,0,TRUE
+"1811","Mesuji",2020,83.66,83.66,0,TRUE
+"1811","Mesuji",2021,85.6,85.6,0,TRUE
+"1811","Mesuji",2022,85.62,85.62,0,TRUE
+"1811","Mesuji",2023,86.21,86.21,0,TRUE
+"1811","Mesuji",2024,88.18,88.18,0,TRUE
+"1812","Tulang Bawang Barat",2019,79.28,79.28,0,TRUE
+"1812","Tulang Bawang Barat",2020,77.58,77.58,0,TRUE
+"1812","Tulang Bawang Barat",2021,78.58,78.58,0,TRUE
+"1812","Tulang Bawang Barat",2022,79.84,79.84,0,TRUE
+"1812","Tulang Bawang Barat",2023,83.59,83.59,0,TRUE
+"1812","Tulang Bawang Barat",2024,83.74,83.74,0,TRUE
+"1813","Pesisir Barat",2019,71.98,71.98,0,TRUE
+"1813","Pesisir Barat",2020,72.93,72.93,0,TRUE
+"1813","Pesisir Barat",2021,71.6,71.6,0,TRUE
+"1813","Pesisir Barat",2022,71.71,71.71,0,TRUE
+"1813","Pesisir Barat",2023,76.32,76.32,0,TRUE
+"1813","Pesisir Barat",2024,75.77,75.77,0,TRUE
+"1871","Kota Bandar Lampung",2019,73.49,73.49,0,TRUE
+"1871","Kota Bandar Lampung",2020,71.62,71.62,0,TRUE
+"1871","Kota Bandar Lampung",2021,74.17,74.17,0,TRUE
+"1871","Kota Bandar Lampung",2022,73.41,73.41,0,TRUE
+"1871","Kota Bandar Lampung",2023,83.37,83.37,0,TRUE
+"1871","Kota Bandar Lampung",2024,84.64,84.64,0,TRUE
+"1872","Kota Metro",2019,75.85,78,-2.15000000000001,FALSE
+"1872","Kota Metro",2020,76.76,76.75,0.0100000000000051,FALSE
+"1872","Kota Metro",2021,76.74,76.74,0,TRUE
+"1872","Kota Metro",2022,73.35,73.35,0,TRUE
+"1872","Kota Metro",2023,83.66,83.66,0,TRUE
+"1872","Kota Metro",2024,85.78,85.78,0,TRUE

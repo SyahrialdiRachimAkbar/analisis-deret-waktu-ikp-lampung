@@ -1,0 +1,21 @@
+ANALISIS DERET WAKTU IKP LAMPUNG
+Waktu eksekusi UTC: 2026-10-06 05:14:17 UTC 
+Validasi: 105 observasi, 15 wilayah, 7 tahun; raw dan clean cocok 105/105.
+LULUS: rumus, batas metode, tanpa kebocoran, agregasi error, dan penolakan data invalid.
+Perubahan: 51 dihitung; 39 dikecualikan.
+Backtest: 12 ramalan kota; 78 kandidat kabupaten tidak diestimasi.
+      tipe metode n_ramalan n_tahun_uji MAE_poin RMSE_poin
+ Kabupaten  drift         0           0       NA        NA
+ Kabupaten  naive         0           0       NA        NA
+      Kota  drift         6           3 4.970806  5.907966
+      Kota  naive         6           3 4.635000  6.105663
+                status
+      tidak_diestimasi
+      tidak_diestimasi
+ eksploratif_bersyarat
+ eksploratif_bersyarat
+Sumber provinsi: 85/90 cocok; 5 selisih dicatat, data tidak diganti.
+Grafik: 6 PNG (300 dpi) dan 6 PDF.
+Laporan dibuat dari tabel hasil: LAPORAN_deret_waktu.md
+LULUS: seluruh data dan arsip lama identik; CSV berhasil dibaca ulang.
+SELESAI: LAPORAN_deret_waktu.md dan output/timeseries/.
